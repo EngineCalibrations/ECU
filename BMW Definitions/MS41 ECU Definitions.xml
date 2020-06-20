@@ -2513,10 +2513,13 @@ AlphaN should never be used with a Forced Induction engine.
 	<state name="If this table displays a warning upon loading the ROM, DO NOT FLASH this file IF you have previously flashed SS1 MS41 20200403.enc or greater, else ECU may brick or cause ENGINE damage! Else, tune the stock AlphaN tables because Extended tables are disabled, if this button is grey."  data="15 40 00 40" />
 </table>
 <table type="Switch" name="*** Diagnostic Parameter***" category="*** CUSTOM  MS41.3  FEATURES BELOW ***" sizey="2" userlevel="5"  storageaddress="0x33EA"> 133EA mem 33EA cal
-	<state name="[test] - IACV PWM E902"   data="02 E9" />
-	<state name="[test] - F05A"   data="5A F0" />
-	<state name="[test] - F106"   data="06 F1" />
-	<state name="[test] - FA94"   data="94 FA" />
+	<state name="[test] - IACV PWM - AlphaN"   data="02 E9" />
+	<state name="[test] - Front O2 Bank 2 - Volts"   data="98 FA" />
+	<state name="[test] - Front O2 Bank 1 - Volts"   data="9A FA" />
+	<state name="[test] - VLS_CAT1"   data="5A F0" />
+	<state name="[test] - VLS_CAT2"   data="06 F1" />
+	<state name="[test] - Rear O2 Bank 2 - Volts"   data="94 FA" />
+	<state name="[test] - Rear O2 Bank 1 - Volts"   data="96 FA" />
 	<state name="[ALL]  - FD22"   data="22 FD" />
 </table>
 <table type="Switch" name="DO NOT EDIT - MAF / Load Limits" category="*** REFERENCE ONLY - Software Limits ***" sizey="2" userlevel="5" storageaddress="0x3FFE" >
@@ -2742,7 +2745,7 @@ AlphaN should never be used with a Forced Induction engine.
 
 <table type="Switch" name="WidebandO2 - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33C0">
 	<state name="[Disabled]"        data="FF FF" />
-	<state name="TPS VoltageBas"    data="DA E8" />
+	<state name="TPS Volts"    data="DA E8" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
 	<state name="Front O2 Bank 2"    data="98 FA" />
@@ -2759,6 +2762,7 @@ AlphaN should never be used with a Forced Induction engine.
 
 <table type="Switch" name="Ethanol - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33CA">
 	<state name="[Disabled]"        data="FF FF" />
+	<state name="TPS Volts"    data="DA E8" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
 	<state name="Front O2 Bank 2"    data="98 FA" />
@@ -2779,6 +2783,7 @@ The Default values are an approximate baseline when used with a properly functio
 
 <table type="Switch" name="MAP - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33EE">
 	<state name="[Disabled]"        data="FF FF" />
+	<state name="TPS Volts"    data="DA E8" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
 	<state name="Front O2 Bank 2"    data="98 FA" />
@@ -2794,7 +2799,8 @@ The Default values are an approximate baseline when used with a properly functio
 </table>
 
 <table type="Switch" name="Oil Pressure - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x361E">
-	<state name="TPS VoltageBas"    data="DA E8" />
+	<state name="[Disabled]"        data="FF FF" />
+	<state name="TPS Volts"    data="DA E8" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
 	<state name="Front O2 Bank 2"    data="98 FA" />
@@ -2813,7 +2819,7 @@ The Default values are an approximate baseline when used with a properly functio
 	<table type="Y Axis" name=" " storagetype="uint8" storageaddress="0x3631" >
 	<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="32" coarseincrement="512" />
 	</table>
-	<description>If Oil Pressure is less than Target, flash CEL. (Not supported in CEL+0 code)
+	<description>If Oil Pressure is less than Target, flash CEL.
 	
 For 10psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 80psi	
 For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
@@ -2821,7 +2827,8 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 </table>
 
 <table type="Switch" name="Fuel Pressure - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x362C">
-	<state name="TPS VoltageBas"    data="DA E8" />
+	<state name="[Disabled]"        data="FF FF" />
+	<state name="TPS Volts"    data="DA E8" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
 	<state name="Front O2 Bank 2"    data="98 FA" />
@@ -2840,7 +2847,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	<table type="Static Y Axis" name="Fuel Pressure Target" >
 		<data>Minimum</data>
 	</table>
-	<description>If Fuel Pressure is less than Target, flash CEL. (Not supported in CEL+0 code)</description>
+	<description>If Fuel Pressure is less than Target, flash CEL.</description>
 </table>
 
 <table type="2D" name="FlexFuel - Fuel Trim" category="FlexFuel" storagetype="uint8" sizey="10" storageaddress="0x3579">
@@ -2992,6 +2999,8 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 </rom>
 
 -->
+
+
 
 <rom base="BMWMS41BASE"> ID12  24KB - ECUID = 1406464
 <!-- In this ROM specific section define only the attributes missing or that need
