@@ -58,7 +58,7 @@
 	name CDATA #REQUIRED
 	data CDATA #REQUIRED >
 ]>
- <!--MS41 ECU DEFINITION FILE (VERSION 0.45.3) 2019-12-28-->
+ <!--MS41 ECU DEFINITION FILE (VERSION 0.45.7) 2020-06-20-->
  <!--TERMS, CONDITIONS, AND DISCLAIMERS
 - - - - - - - - - - - - - - - - - - - - - - - - -
 WARNING: These definition files are created as the result of the extremely complex and time consuming process of reverse-engineering the factory ECU. Because of this complexity, it is necessary to make certain assumptions and, therefore, it is impossible to always deal in absolutes in regards to representations made by these definitions. In addition, due to this complexity and the numerous variations among different ECUs, it is also impossible to guarantee that the definitions will not contain errors or other bugs. What this all means is that there is the potential for bugs, errors and misrepresentations which can result in damage to your motor, your ECU as well the possibility of causing your vehicle to behave unexpectedly on the road, increasing the risk of death or injury. Modifications to your vehicle's ECU may also be in violation of local, state and federal laws. By using these definition files, either directly or indirectly, you agree to assume 100% of all risk and RomRaider's creators and contributors shall not be held responsible for any damages or injuries you receive. This product is for advanced users only. There are no safeguards in place when tuning with RomRaider. As such, the potential for serious damage and injury still exists, even if the user does not experience any bugs or errors. As always, use at your own risk.
@@ -81,6 +81,7 @@ These definitions are created for FREE without any sort of guarantee. The develo
 	v0.45.4 - Added LTV support for ECU ID 1429861
 	v0.45.5 - Added a couple of Anti-Jerk related tables
 	v0.45.6	- Added IACV - AC Transient Adder
+	v0.45.7 - Fixed formula for ECT/IAT Ignition Timing Compensation Multiplicative & Injector Pulsewidths (0.004 to 0.0053)
 	
 	v0.46
 	- Initial MS41.3 release
@@ -428,14 +429,14 @@ www.romraider.com/forum/viewforum.php?f=42
 	<description></description>
 </table> 
 <table type="2D" name="Adaptation Additive - Minimum Limit" category="Adaptive Fuel Learning" storagetype="uint16" endian="little"  userlevel="1" sizey="1">
-	<scaling units="milliseconds" expression="(x-32768)*.004" to_byte="(x/.004)+32768" format="0.00" fineincrement=".1" coarseincrement="1" />
+	<scaling units="milliseconds" expression="(x-32768)*.0053" to_byte="(x/.0053)+32768" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="Static Y Axis" name="Adaptation Additive - Minimum Limit" sizey="1">
 		<data>Adaptation Additive - Minimum Limit</data>
 	</table>
 	<description></description>
 </table> 
 <table type="2D" name="Adaptation Additive - Maximum Limit" category="Adaptive Fuel Learning" storagetype="uint16" endian="little"  userlevel="1" sizey="1">
-	<scaling units="milliseconds" expression="(x-32768)*.004" to_byte="(x/.004)+32768" format="0.00" fineincrement=".1" coarseincrement="1" />
+	<scaling units="milliseconds" expression="(x-32768)*.0053" to_byte="(x/.0053)+32768" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="Static Y Axis" name="Adaptation Additive - Maximum Limit" sizey="1">
 		<data>Adaptation Additive - Maximum Limit</data>
 	</table>
@@ -454,7 +455,7 @@ www.romraider.com/forum/viewforum.php?f=42
 <table type="3D" name="Adaptation Additive - Warm-up Compensation" category="Adaptive Fuel Learning" storagetype="uint8"  userlevel="1" sizey="5" sizex="5" >
 	<scaling units="Multiplicative %" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
 	<table type="X Axis" name="Adaptation Additive" storagetype="uint16" endian="little">
-		<scaling units="milliseconds" expression="(x-32768)*.004" to_byte="(x/.004)+32768"  format="0.00" fineincrement="1" coarseincrement="10" />
+		<scaling units="milliseconds" expression="(x-32768)*.0053" to_byte="(x/.0053)+32768"  format="0.00" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2" >
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
@@ -549,7 +550,6 @@ www.romraider.com/forum/viewforum.php?f=42
 </table> 
 
 
-
 <table type="3D" name="Fuel Enrichment - Increasing TPS" category="Acceleration" storagetype="uint8"  userlevel="1" sizey="6" sizex="6" >
 	<scaling units="Multiplicative Factor" expression="x*(4/256)" to_byte="x/(4/256)" format="0.00" fineincrement="0.05" coarseincrement="1" />
 	<table type="Y Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2">
@@ -591,7 +591,6 @@ Used in two scenarios; 'First Triggering' and 'New Triggering'. During 'First Tr
 </table>
 
 
-
 <table type="3D" name="Detection - Increasing TPS" category="Acceleration" storagetype="uint8"  userlevel="1" sizey="6" sizex="4">
 	<scaling units="TPS/sec" expression="(x)*(2988/256)" to_byte="x/(2988/256)" format="0" fineincrement="10" coarseincrement="50" />
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
@@ -609,7 +608,6 @@ Used in two scenarios; 'First Triggering' and 'New Triggering'. During 'First Tr
 	</table>	
 	<description>ID_TPS_GRD_ADD_AE(_AT)__TCO - If the Throttle is increasing faster than the sum of "Detection - Increasing TPS" and "Detection - Increasing TPS (ECT Compensation)" then Acceleration tables are used.</description>
 </table>
-
 
 
 <table type="3D" name="Ignition Retard - Fast Increasing TPS" category="Acceleration" storagetype="uint8"  userlevel="1" sizex="4" sizey="4" >
@@ -638,7 +636,6 @@ Used in two scenarios; 'First Triggering' and 'New Triggering'. During 'First Tr
 </table>
 
 
-
 <table type="2D" name="Detection - Fast Increasing TPS" category="Acceleration" storagetype="uint8"  userlevel="1" sizey="4" >
 	<scaling units="TPS/sec" expression="(x)*(2988/256)" to_byte="x/(2988/256)" format="0" fineincrement="10" coarseincrement="50" />
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
@@ -646,7 +643,6 @@ Used in two scenarios; 'First Triggering' and 'New Triggering'. During 'First Tr
 	</table>	
 	<description>ID_IGA_TPS_GRD_TRA__N_32 - If the Throttle is increasing faster than this table, then Ignition Retard is applied to help prevent knock when the Throttle is opened quickly.</description>
 </table>
-
 
 
 <table type="3D" name="Fuel Enrichment - Increasing Load - Initial" category="Acceleration" storagetype="uint8" userlevel="1" sizey="4" sizex="4" > IP_TI_FAC_AE(_AT)__N_32__MAF
@@ -726,7 +722,6 @@ Else, a 'Re-Trigger' is possible.
 </table>
 
 
-
 <table type="2D" name="Fuel Restore - RPM" category="Deceleration" storagetype="uint8"  userlevel="1" sizey="6" >
 	<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="30" coarseincrement="300" />
 	<table type="Y Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2" >
@@ -785,7 +780,6 @@ Else, a 'Re-Trigger' is possible.
 </table>
 
 
-
 <table type="3D" name="Fuel Enleanment - Decreasing TPS" category="Deceleration" storagetype="uint8"  userlevel="1" sizey="4" sizex="4" >
 	<scaling units="%" expression="(x)*(-100/255)" to_byte="x/(-100/255)" format="0.0" fineincrement=".5" coarseincrement="5" />
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
@@ -823,7 +817,6 @@ Else, a 'Re-Trigger' is possible.
 	</table>
 	<description>IP_TI_FAC_PUR_RST(_AT)__CYC - This table is used to slowly decay the applied "Fuel Enleanment - Decreasing TPS" and takes place over the duration set by the "Fuel Enleanment - Decreasing TPS - Session Duration" table. The first value at a "Session Duration Counter" of 0 should always be 0.00.</description>
 </table>
-
 
 
 <table type="3D" name="Ignition Retard - Decreasing TPS" category="Deceleration" storagetype="uint8"  userlevel="1" sizey="4" sizex="4" >
@@ -867,6 +860,7 @@ Else, a 'Re-Trigger' is possible.
 	</table>
 	<description>ID_IGA_TCO_LGRD_PU(_AT)__TCO - "Ignition Retard - Decreasing TPS - Step Size" and "Ignition Retard - Decreasing TPS - Step Size (ECT Compensation)" are added together to determine how gradually Ignition Timing is allowed to decrease when Throttle is slowly reduced. This is used during both "Ignition Retard - Decreasing TPS" and "Ignition Retard - Decreasing TPS (Closed)" but not "Ignition Retard - Fast Decreasing TPS (Closed)". A larger 'step size' will result in a faster change to applied Ignition Timing.</description>
 </table>
+
 
 <table type="3D" name="Detection - Decreasing TPS" category="Deceleration" storagetype="uint8"  userlevel="1" sizey="6" sizex="4">
 	<scaling units="TPS/sec" expression="(x)*(-2988/256)" to_byte="x/(-2988/256)" format="0" fineincrement="10" coarseincrement="50" />
@@ -936,6 +930,7 @@ Else, a 'Re-Trigger' is possible.
 	<description>C_TCO_MIN_PU - If Coolant Temperature is greater than this value, allow "Fast Decreasing TPS" detection.</description>
 </table>
 
+
 <table type="2D" name="AlphaN - TPS (DTC 12)" category="AlphaN" storagetype="uint8" sizey="6" >
 	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
@@ -990,8 +985,9 @@ AlphaN should never be used with a Forced Induction engine.
 	</description>
 </table>
 
+
 <table type="3D" name="Fuel Injection - Base" category="Fuel" storagetype="uint16" endian="little" sizex="12" sizey="16" userlevel="1" >
-	<scaling units="Injector Pulsewidth (ms)" expression="x*.004" to_byte="x/.004" format="0.00" fineincrement=".1" coarseincrement="1" />
+	<scaling units="Injector Pulsewidth (ms)" expression="x*.0053" to_byte="x/.0053" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" >
 		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -1001,7 +997,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>This table contains the Injector Pulse Width (in milliseconds) needed to get an AFR of 14.7 at a given Load and Engine Speed. Adjust this by a percentage of injector difference from stock as a baseline. Tune a needed.</description>
 </table>
 <table type="2D" name="Fuel Injection - Minimum IPW" category="Fuel" storagetype="uint16" endian="little" sizey="1" userlevel="1">
-	<scaling units="ms" expression="x*.004" to_byte="x/.004"  format="0.000" fineincrement="0.001" coarseincrement="1" />
+	<scaling units="ms" expression="x*.0053" to_byte="x/.0053"  format="0.000" fineincrement="0.001" coarseincrement="1" />
 <table type="Static Y Axis" name="Minimum IPW" sizey="1">
 	<data>Minimum Injector Pulsewidth</data>
 </table>
@@ -1052,14 +1048,14 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>Fuel enrichment for a cold engine. Multiply the values in this table to "Fuel Injection - Warmup Enrichment" to calculate final Warmup Enrichment</description>
 </table>
 <table type="2D" name="Fuel Injection - Cranking - Initial" category="Fuel" storagetype="uint16" endian="little"  userlevel="1" sizey="8" >
-	<scaling units="Injector Pulse Width (milliseconds)" expression="x*.004" to_byte="x/.004" format="0.00" fineincrement="1" coarseincrement="10" />
+	<scaling units="Injector Pulse Width (milliseconds)" expression="x*.0053" to_byte="x/.0053" format="0.00" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2">
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<description>First Injector Pulse Width while cranking.</description>
 </table>
 <table type="3D" name="Fuel Injection - Cranking" category="Fuel" storagetype="uint16" endian="little"  userlevel="1" sizex="8" sizey="3" >
-	<scaling units="Injector Pulse Width (milliseconds)" expression="x*.004" to_byte="x/.004" format="0.00" fineincrement="1" coarseincrement="10" />
+	<scaling units="Injector Pulse Width (milliseconds)" expression="x*.0053" to_byte="x/.0053" format="0.00" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2" >
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -1089,6 +1085,7 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>Fuel Economy Gauge - Scaling Factor</description>
 </table>
+
 
 <table type="3D" name="Ignition Timing - Base" category="Ignition Timing" storagetype="uint8" sizex="12" sizey="16" userlevel="1" >
 	<scaling units="&deg;BTDC" expression="(x*.375)-23.6" to_byte="(x+23.6)/.375" format="0.00" fineincrement=".1" coarseincrement="1" />
@@ -1121,7 +1118,8 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>This table modifies Ignition Timing when VANOS is active. The values in this map are mutliplied to the measured VANOS angle and added or subtracted to "Ignition Timing - Base".</description>
 </table>
 <table type="3D" name="Ignition Timing - Base - ECT/IAT Compensation - Multiplicative" category="Ignition Timing" storagetype="uint8" sizex="6" sizey="6" userlevel="1" >
-	<scaling units="Multiplicative Factor" expression="(128-x)*.0078" to_byte="128-(x/.0078)" format="0.00" fineincrement=".1" coarseincrement="1" />
+	<!-- <scaling units="Multiplicative Factor" expression="(128-x)*.0078" to_byte="128-(x/.0078)" format="0.00" fineincrement=".1" coarseincrement="1" /> -->
+	<scaling units="Multiplicative Factor" expression="(-x)*.00392" to_byte="(-x/.00392)" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Air Temperature" storagetype="uint8" logparam="P11" >
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -1155,7 +1153,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<table type="Y Axis" name="Coolant Temperature" storagetype="uint8" sizey="6" endian="little" logparam="P2" >
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
-	<description>IP_IGA_TCO_IS__TCO - This table increases Ignition Timing in idle when Coolant Temperature is low.</description>
+	<description>IP_IGA_TCO_IS__TCO - This table increases Ignition Timing during engine idle when Coolant Temperature is low.</description>
 </table>
 <table type="2D" name="Ignition Timing - Cranking" category="Ignition Timing" storagetype="uint8" sizey="3" userlevel="1" logparam="P10" >
 	<scaling units="&deg;BTDC" expression="x*.375-23.6" to_byte="(x+23.6)/.375"  format="0.0" fineincrement="1" coarseincrement="10" />
@@ -1536,7 +1534,6 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>IP_ISAPWM_LGRD__N_32 - These values are used to soften the torque reduction when the Throttle is closed. Smaller values result in a more gradual closure of the IACV and therefore a softer torque reduction.</description>
 </table>
-
 
 <table type="3D" name="Ignition Retard - ASC" category="Special Functions/Thresholds" storagetype="uint8"  userlevel="1" sizex="4" sizey="4" >
 	<scaling units="&deg;CRK" expression="(x-128)*.375" to_byte="x/.375+128" format="0.00" fineincrement=".5" coarseincrement="5" />
@@ -2513,14 +2510,14 @@ AlphaN should never be used with a Forced Induction engine.
 	<state name="If this table displays a warning upon loading the ROM, DO NOT FLASH this file IF you have previously flashed SS1 MS41 20200403.enc or greater, else ECU may brick or cause ENGINE damage! Else, tune the stock AlphaN tables because Extended tables are disabled, if this button is grey."  data="15 40 00 40" />
 </table>
 <table type="Switch" name="*** Diagnostic Parameter***" category="*** CUSTOM  MS41.3  FEATURES BELOW ***" sizey="2" userlevel="5"  storageaddress="0x33EA"> 133EA mem 33EA cal
-	<state name="[test] - IACV PWM - AlphaN"   data="02 E9" />
-	<state name="[test] - Front O2 Bank 2 - Volts"   data="98 FA" />
-	<state name="[test] - Front O2 Bank 1 - Volts"   data="9A FA" />
-	<state name="[test] - VLS_CAT1"   data="5A F0" />
-	<state name="[test] - VLS_CAT2"   data="06 F1" />
+	<state name="[test] - IACV PWM - AlphaN"   		data="02 E9" />
+	<state name="[test] - Front O2 Bank 2 - Volts"  data="98 FA" />
+	<state name="[test] - Front O2 Bank 1 - Volts"  data="9A FA" />
+	<state name="[test] - VLS_CAT1"   				data="5A F0" />
+	<state name="[test] - VLS_CAT2"   				data="06 F1" />
 	<state name="[test] - Rear O2 Bank 2 - Volts"   data="94 FA" />
 	<state name="[test] - Rear O2 Bank 1 - Volts"   data="96 FA" />
-	<state name="[ALL]  - FD22"   data="22 FD" />
+	<state name="[ALL]  - FD22"   					data="22 FD" />
 </table>
 <table type="Switch" name="DO NOT EDIT - MAF / Load Limits" category="*** REFERENCE ONLY - Software Limits ***" sizey="2" userlevel="5" storageaddress="0x3FFE" >
 	<state name="MAF = xxxx ..... Load  = 1389" data="FF FF" />
@@ -2587,7 +2584,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>This table defines how much more fuel to add when in "Fuel Injection - Open Loop Enrichment" mode.</description>
 </table>
 <table type="3D" name="Fuel Injection - Base SS1" category="SS1 - Fuel" storagetype="uint16" endian="little" sizex="20" sizey="20" storageaddress="369E">
-	<scaling units="Injector Pulsewidth (ms)" expression="x*.004" to_byte="x/.004" format="0.00" fineincrement=".1" coarseincrement="1" />
+	<scaling units="Injector Pulsewidth (ms)" expression="x*.0053" to_byte="x/.0053" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
 		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
