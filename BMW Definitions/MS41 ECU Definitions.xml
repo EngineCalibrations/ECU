@@ -2745,11 +2745,12 @@ AlphaN should never be used with a Forced Induction engine.
 
 <table type="Switch" name="WidebandO2 - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33C0">
 	<state name="[Disabled]"        data="FF FF" />
-	<state name="TPS Volts"    data="DA E8" />
+	<state name="TPS Volts"    		data="DA E8" />
+	<state name="TPS Volts Bas" 	data="A2 FA" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
-	<state name="Front O2 Bank 2"    data="98 FA" />
-	<state name="Front O2 Bank 1"    data="9A FA" />	
+	<state name="Front O2 Bank 2"   data="98 FA" />
+	<state name="Front O2 Bank 1"   data="9A FA" />	
 	<state name="Evap. Pressure"    data="A8 F5" />
 	<description>Select sensor input. TPS Voltage option can be used to demonstrate how voltage affects the readout. Use for diagnostic purposes.</description>
 </table>
@@ -2762,11 +2763,12 @@ AlphaN should never be used with a Forced Induction engine.
 
 <table type="Switch" name="Ethanol - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33CA">
 	<state name="[Disabled]"        data="FF FF" />
-	<state name="TPS Volts"    data="DA E8" />
+	<state name="TPS Volts"    		data="DA E8" />
+	<state name="TPS Volts Bas" 	data="A2 FA" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
-	<state name="Front O2 Bank 2"    data="98 FA" />
-	<state name="Front O2 Bank 1"    data="9A FA" />	
+	<state name="Front O2 Bank 2"   data="98 FA" />
+	<state name="Front O2 Bank 1"   data="9A FA" />	
 	<state name="Evap. Pressure"    data="A8 F5" />
 	<description>Select sensor input. Also enables Ethanol Logic. Only enable if you have correctly wired and installed the Ethanol Content Sensor. Else, the ECU will enrich based on the Ethanol - Fuel Trim table incorrectly.
 
@@ -2783,11 +2785,12 @@ The Default values are an approximate baseline when used with a properly functio
 
 <table type="Switch" name="MAP - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33EE">
 	<state name="[Disabled]"        data="FF FF" />
-	<state name="TPS Volts"    data="DA E8" />
+	<state name="TPS Volts"    		data="DA E8" />
+	<state name="TPS Volts Bas" 	data="A2 FA" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
-	<state name="Front O2 Bank 2"    data="98 FA" />
-	<state name="Front O2 Bank 1"    data="9A FA" />	
+	<state name="Front O2 Bank 2"   data="98 FA" />
+	<state name="Front O2 Bank 1"   data="9A FA" />	
 	<state name="Evap. Pressure"    data="A8 F5" />
 	<description>Select sensor input. </description>
 </table>
@@ -2800,11 +2803,12 @@ The Default values are an approximate baseline when used with a properly functio
 
 <table type="Switch" name="Oil Pressure - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x361E">
 	<state name="[Disabled]"        data="FF FF" />
-	<state name="TPS Volts"    data="DA E8" />
+	<state name="TPS Volts"    		data="DA E8" />
+	<state name="TPS Volts Bas" 	data="A2 FA" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
-	<state name="Front O2 Bank 2"    data="98 FA" />
-	<state name="Front O2 Bank 1"    data="9A FA" />	
+	<state name="Front O2 Bank 2"   data="98 FA" />
+	<state name="Front O2 Bank 1"   data="9A FA" />	
 	<state name="Evap. Pressure"    data="A8 F5" />
 	<description>Select sensor input. TPS Voltage option can be used to demonstrate how voltage affects the readout. Use for diagnostic purposes.</description>
 </table>
@@ -2828,11 +2832,12 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 
 <table type="Switch" name="Fuel Pressure - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x362C">
 	<state name="[Disabled]"        data="FF FF" />
-	<state name="TPS Volts"    data="DA E8" />
+	<state name="TPS Volts"    		data="DA E8" />
+	<state name="TPS Volts Bas" 	data="A2 FA" />
 	<state name="Rear O2 Bank 1"    data="96 FA" />
 	<state name="Rear O2 Bank 2"    data="94 FA" />
-	<state name="Front O2 Bank 2"    data="98 FA" />
-	<state name="Front O2 Bank 1"    data="9A FA" />	
+	<state name="Front O2 Bank 2"   data="98 FA" />
+	<state name="Front O2 Bank 1"   data="9A FA" />	
 	<state name="Evap. Pressure"    data="A8 F5" />
 	<description>Select sensor input. TPS Voltage option can be used to demonstrate how voltage affects the readout. Use for diagnostic purposes.</description>
 </table>
