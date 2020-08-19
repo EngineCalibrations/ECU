@@ -82,6 +82,7 @@ These definitions are created for FREE without any sort of guarantee. The develo
 	v0.45.5 - Added a couple of Anti-Jerk related tables
 	v0.45.6	- Added IACV - AC Transient Adder
 	v0.45.7 - Fixed formula for ECT/IAT Ignition Timing Compensation Multiplicative & Injector Pulsewidths (0.004 to 0.0053)
+	v0.45.8 - Added Min/Max TPS Voltage Thresholds for DTC 12
 	
 	v0.46
 	- Initial MS41.3 release
@@ -285,7 +286,7 @@ www.romraider.com/forum/viewforum.php?f=42
 	<description>LBD_HEAT_MAX_VOLTS_0387, LBD_HEAT_MIN_VOLTS_0389</description>
 </table>
 
-  
+
 <table type="2D" name="CH - On/Off - VANOS" category="Catalyst Heating" storagetype="uint8" sizey="8" userlevel="1">
 	<scaling units="On/Off" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="1" />
 	<table type="Y Axis" name="Coolant Temperature @ Engine Start" storagetype="uint8">
@@ -1496,6 +1497,13 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>C_TPS_IS - If Throttle is less than this value, "Closed Throttle" mode is active.</description>
 </table>
+<table type="2D" name="DTC 12 - Minimum Voltage (TPS)" category="Special Functions/Thresholds" storagetype="uint8" sizey="1" userlevel="1">
+	<scaling units="Volts" expression="x*.0195" to_byte="x/.0195"  format="0.00" fineincrement="0.1" coarseincrement="10" />
+	<table type="Static Y Axis" name="Reduce value for larger throttle bodies" sizey="1">
+		<data>Minimum Allowable Volts</data>
+	</table>
+	<description>If TPS voltage with a fully closed throttle is less than this value, DTC 12 will be set. Reduce this value when installing bigger throttle bodies.</description>
+</table> 
 <table type="2D" name="Intercept - RPM" category="Special Functions/Thresholds" storagetype="uint8"  userlevel="1" sizey="1" >
 	<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="30" coarseincrement="300" />
 	<table type="Static Y Axis" name="Maximum" sizey="1">
@@ -2449,13 +2457,13 @@ AlphaN should never be used with a Forced Induction engine.
    <xmlid>SS1v0</xmlid>
    <ecuid>SHINDE1</ecuid>
    <year> </year>
-   <market> </market>
-   <make> </make>
-   <model> </model>
+   <market>USA</market>
+   <make>Custom</make>
+   <model>OBD2</model>
    <submodel>MS41.3</submodel>
    <transmission> </transmission>
    <memmodel>80C166W-M-T3</memmodel>
-   <filesize>24kb</filesize>
+   <filesize>24kb</filesize>   
   </romid>
 
 <table type="2D" name="Detection - Open Loop Enrichment" category="Fuel" storagetype="uint8" sizey="16" storageaddress="0x12AE">
@@ -3012,7 +3020,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
    <internalidaddress>E</internalidaddress>
    <internalidstring>12</internalidstring>
    <xmlid>12</xmlid>
-   <ecuid>1406464</ecuid>
+   <ecuid>1406464</ecuid> 
    <year>1996-1999</year>
    <market>USDM</market>
    <make>BMW</make>
@@ -3085,11 +3093,11 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 </table>  
 <table name="Adaptation Additive - Maximum Limit" storageaddress="0x146">
 </table>  
-  <table name="Adaptation Multiplicative - Warm-up Compensation" storageaddress="0x22B2">
+<table name="Adaptation Multiplicative - Warm-up Compensation" storageaddress="0x22B2">
    <table type="X Axis" storageaddress="0x208E" />
    <table type="Y Axis" storageaddress="0x206D" />
   </table>
-    <table name="Adaptation Additive - Warm-up Compensation" storageaddress="0x2294">
+<table name="Adaptation Additive - Warm-up Compensation" storageaddress="0x2294">
    <table type="X Axis" storageaddress="0x2082" />
    <table type="Y Axis" storageaddress="0x206D" />
   </table>
@@ -3498,6 +3506,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="ISR - Maximum Integral Limit (above Idle w/ AC on)" storageaddress="0x126" />
 
 <table name="Detection - Closed Throttle" storageaddress="0x210" />
+<table name="DTC 12 - Minimum Voltage (TPS)" storageaddress="0x214" />
 <table name="Intercept - RPM" storageaddress="0x2B3" />
 <table name="Rapid Engine Speed Drop - Integral Additive" storageaddress="0x120" />
 <table name="Detection - Rapid Engine Speed Drop" storageaddress="0x2B2" />
@@ -5207,5 +5216,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
    <transmission>MT</transmission>
   </romid>
 </rom>
+
+
  
 </roms>
