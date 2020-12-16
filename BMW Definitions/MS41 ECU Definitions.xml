@@ -86,7 +86,7 @@ These definitions are created for FREE without any sort of guarantee. The develo
 	
 	v0.46
 	- Initial MS41.3 release
-	
+	12/16/20 - Changed formula for FF Ign. Trim to x-128
 
 	 In this BASE section define all the common table data and axis attributes.
      Leave out the ROM specific addresses. -->
@@ -2873,7 +2873,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	</table>
 </table>
 <table type="2D" name="FlexFuel - Ignition Trim" category="FlexFuel" storagetype="uint8" sizey="10" storageaddress="0x3583">
-	<scaling units="This table (%) is multiplied to 'FlexFuel - Ignition Compensation', then added or subtracted from 'Ignition Timing - Base'" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
+	<scaling units="This table (%) is multiplied to 'FlexFuel - Ignition Compensation', then added or subtracted from 'Ignition Timing - Base'" expression="(x-128)*(100/255)" to_byte="x/(100/255)+128" format="0" fineincrement="1" coarseincrement="5" />
 	<table type="Y Axis" name="FlexFuel" storagetype="uint8" storageaddress="0x356F">
 		<scaling units="%" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
 	</table>
