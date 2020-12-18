@@ -2873,9 +2873,9 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	</table>
 </table>
 <table type="2D" name="FlexFuel - Ignition Trim" category="FlexFuel" storagetype="uint8" sizey="10" storageaddress="0x3583">
-	<scaling units="This table (%) is multiplied to 'FlexFuel - Ignition Compensation', then added to 'Ignition Timing - Base'" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
+	<scaling units="This table (%) is multiplied to 'FlexFuel - Ignition Compensation', then added to 'Ignition Timing - Base'" expression="x*(100/255)" to_byte="x/(100/255)" format="0.0" fineincrement="1" coarseincrement="5" />
 	<table type="Y Axis" name="FlexFuel" storagetype="uint8" storageaddress="0x356F">
-		<scaling units="%" expression="x*(100/255)" to_byte="x/(100/255)" format="0.0" fineincrement="1" coarseincrement="5" />
+		<scaling units="%" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
 	</table>
 </table>
 <table type="3D" name="FlexFuel - Ignition Compensation" category="FlexFuel" storagetype="uint8" sizey="10" sizex="10" storageaddress="0x35B8">	
