@@ -2533,7 +2533,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<state name="MAF = 2048 ..... Load  = 1389" data="32 FF" />
 </table>
 
-<table type="3D" name="SS1 AlphaN - IACV (TPS Compensation)" category="SS1 - AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="42C8">
+<table type="3D" name="AlphaN - IACV (TPS Compensation)" category="AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="42C8">
 	<scaling units="Multiplier %" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="TPS" storagetype="uint8" logparam="P13" storageaddress="4016"> TPS xE8D0
 		<scaling units="TPS%" expression="x*.47" to_byte="x/.47" format="0" fineincrement="1" coarseincrement="10" />
@@ -2543,7 +2543,7 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>AlphaN - IACV (TPS Compensation)</description>
 </table>
-<table type="3D" name="SS1 AlphaN - IACV" category="SS1 - AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="4188">
+<table type="3D" name="AlphaN - IACV" category="AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="4188">
 	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="IACV" storagetype="uint16" endian="little" storageaddress="4028"> ISA xE902
 		<scaling units="%" expression="x*(100/65535)" to_byte="x/(100/65535)" format="0" fineincrement="1" coarseincrement="5" />
@@ -2553,7 +2553,7 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>AlphaN - IACV</description>
 </table>
-<table type="3D" name="SS1 AlphaN - TPS" category="SS1 - AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="4048">
+<table type="3D" name="AlphaN - TPS" category="AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="4048">
 	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="TPS" storagetype="uint8" logparam="P13" storageaddress="4016"> TPS xE8D0
 		<scaling units="TPS%" expression="x*.47" to_byte="x/.47" format="0" fineincrement="1" coarseincrement="10" />
@@ -2572,26 +2572,26 @@ This results in a calculated Load (and Airflow) value that is used throughout th
 AlphaN should never be used with a Forced Induction engine.
 	</description>
 </table>
-<table type="Switch" name="AlphaN or MAF" category="SS1 - AlphaN" sizey="1" storageaddress="0x33E0">
+<table type="Switch" name="AlphaN or MAF" category="AlphaN" sizey="1" storageaddress="0x33E0">
 	<state name="AlphaN"  data="01" />
 	<state name="MAF"     data="FF" />
 	<description>Select applicable metering mode.</description>
 </table>
-<table type="Switch" name="DTC 8 - Air Flow Meter (HFM) x252" category="SS1 - AlphaN" sizey="1" storageaddress="0x252">
+<table type="Switch" name="DTC 8 - Air Flow Meter (HFM) x252" category="AlphaN" sizey="1" storageaddress="0x252">
 	<state name="Enabled"  data="14" />
 	<state name="Disabled" data="00" />
 		<description>Enabled = stock, allows DTC. Other DTC disable switch (x22A) might be enough for AlphaN.</description>
 </table>
 
 
-<table type="2D" name="Fuel Injection - Open Loop Enrichment SS1" category="SS1 - Fuel" storagetype="uint8" sizey="20" storageaddress="368A">
+<table type="2D" name="Fuel Injection - Open Loop Enrichment" category="Fuel" storagetype="uint8" sizey="20" storageaddress="368A">
 <scaling units="Enrichment (%)" expression="x*.392" to_byte="x/.392"  format="0.0" fineincrement="1" coarseincrement="5" />
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little"  logparam="P8" storageaddress="3638">
 		<scaling units="RPM" expression="x" to_byte="x" format="0" fineincrement="10" coarseincrement="50" />
 	</table>
 	<description>This table defines how much more fuel to add when in "Fuel Injection - Open Loop Enrichment" mode.</description>
 </table>
-<table type="3D" name="Fuel Injection - Base SS1" category="SS1 - Fuel" storagetype="uint16" endian="little" sizex="20" sizey="20" storageaddress="369E">
+<table type="3D" name="Fuel Injection - Base" category="Fuel" storagetype="uint16" endian="little" sizex="20" sizey="20" storageaddress="369E">
 	<scaling units="Injector Pulsewidth (ms)" expression="x*.0053" to_byte="x/.0053" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
 		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
@@ -2601,7 +2601,7 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>This table contains the Injector Pulse Width (in milliseconds) needed to get an AFR of 14.7 at a given Load and Engine Speed. Adjust this by a percentage of injector difference from stock as a baseline. Tune a needed.</description>
 </table>
-<table type="3D" name="Fuel Injection - Base - VANOS Correction SS1" category="SS1 - Fuel" storagetype="uint16" endian="little" sizex="20" sizey="20" storageaddress="39BE">
+<table type="3D" name="Fuel Injection - Base - VANOS Correction" category="Fuel" storagetype="uint16" endian="little" sizex="20" sizey="20" storageaddress="39BE">
 	<scaling units="Multiplier" expression="(x-32768)*.001526" to_byte="(x/.001526)+32768" format="0.0000" fineincrement=".001" coarseincrement=".01" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
 		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
@@ -2611,7 +2611,7 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>This table defines how much more fuel to add when in "Fuel Injection - Open Loop Enrichment" mode.</description>
 </table>
-<table type="3D" name="Ignition Timing - Base SS1" category="SS1 - Ignition Timing" storagetype="uint8" sizex="20" sizey="20" storageaddress="3CDE" >
+<table type="3D" name="Ignition Timing - Base" category="Ignition Timing" storagetype="uint8" sizex="20" sizey="20" storageaddress="3CDE" >
 	<scaling units="&deg;BTDC" expression="(x*.375)-23.6" to_byte="(x+23.6)/.375" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
 		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
@@ -2621,7 +2621,7 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>This table contains the Injector Pulse Width (in milliseconds) needed to get an AFR of 14.7 at a given Load and Engine Speed. Adjust this by a percentage of injector difference from stock as a baseline. Tune a needed.</description>
 </table>
-<table type="3D" name="Ignition Timing - Base - VANOS Correction SS1" category="SS1 - Ignition Timing" storagetype="uint8" sizex="20" sizey="20" storageaddress="3E6E" >
+<table type="3D" name="Ignition Timing - Base - VANOS Correction" category="Ignition Timing" storagetype="uint8" sizex="20" sizey="20" storageaddress="3E6E" >
 	<scaling units="Multiplier" expression="(x-128)*.392" to_byte="x/.392+128" format="0.00" fineincrement="1" coarseincrement="2" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
 		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
@@ -2631,7 +2631,7 @@ AlphaN should never be used with a Forced Induction engine.
 	</table>
 	<description>This table modifies Ignition Timing when VANOS is active. The values in this map are mutliplied to the measured VANOS angle and added or subtracted to "Ignition Timing - Base".</description>
 </table>
-<table type="2D" name="X Axis - Load SS1" category="SS1 - Fuel / Ignition Timing - Axis" storagetype="uint16" sizex="20" endian="little" storageaddress="3662">
+<table type="2D" name="X Axis - Load" category="Fuel / Ignition Timing - Axis" storagetype="uint16" sizex="20" endian="little" storageaddress="3662">
 	<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212"  format="0.00" fineincrement=".01" coarseincrement=".1" />
 	<table type="Static Y Axis" name="Columns" sizex="20">
 		<data>1</data>
@@ -2656,7 +2656,7 @@ AlphaN should never be used with a Forced Induction engine.
 		<data>20</data>
 	</table>
 </table>
-<table type="2D" name="Y Axis - Engine Speed SS1" category="SS1 - Fuel / Ignition Timing - Axis" storagetype="uint16" sizey="20" endian="little" storageaddress="3638" >
+<table type="2D" name="Y Axis - Engine Speed" category="Fuel / Ignition Timing - Axis" storagetype="uint16" sizey="20" endian="little" storageaddress="3638" >
 	<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
 	<table type="Static Y Axis" name="Rows" sizey="20">
 		<data>1</data>
