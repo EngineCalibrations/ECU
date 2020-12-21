@@ -603,7 +603,7 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                         <address>0x0000E801</address> MS41.3
                     </ecu>
                     <conversions>
-                        <conversion units="%" expr="x*0.392" format="0.0" gauge_min="0.0" gauge_max="100" gauge_step="5" />
+                        <conversion units="%" expr="x-128*0.392" format="0.0" gauge_min="0.0" gauge_max="100" gauge_step="5" />
                     </conversions>
                 </ecuparam>		
                 <ecuparam id="E85" name=".FF_IPW %" desc="FlexFuel - Fuel Trim (MS41.3)" group="0x0B" subgroup="0x01" target="1">
@@ -611,7 +611,7 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                         <address>0x0000E809</address> MS41.3
                     </ecu>
                     <conversions>
-                        <conversion units="%" expr="x*0.392" format="0.0" gauge_min="0" gauge_max="100" gauge_step="5" />
+                        <conversion units="%" expr="x-128*0.392" format="0.0" gauge_min="0" gauge_max="100" gauge_step="5" />
                     </conversions>
                 </ecuparam>
 				<ecuparam id="E86" name=".FF_IGN" desc="FlexFuel - Ignition Advance (MS41.3)" group="0x0B" subgroup="0x01" target="1">
