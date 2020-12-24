@@ -2867,20 +2867,19 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	</table>
 </table>
 <table type="2D" name="FlexFuel - Cranking Fuel Trim" category="FlexFuel" storagetype="uint8" sizey="10" storageaddress="0x358D">
-	<scaling units="Additive %" expression="(x-128)*(100/255)" to_byte="x/(100/255)+128" format="0.0" fineincrement="1" coarseincrement="5" />
+	<scaling units="Additive %" expression="(x-128)*(200/255)" to_byte="x/(200/255)+128" format="0.0" fineincrement="1" coarseincrement="5" />
 	<table type="Y Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2" storageaddress="0x3598">
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="50" coarseincrement="100" />
 	</table>
 </table>
 <table type="2D" name="FlexFuel - Ignition Trim" category="FlexFuel" storagetype="uint8" sizey="10" storageaddress="0x3583">
-	<scaling units="This table (%) is multiplied to 'FlexFuel - Ignition Compensation', then added to 'Ignition Timing - Base'" expression="(x-128)*(100/255)" to_byte="x/(100/255)+128" format="0.0" fineincrement="1" coarseincrement="5" />
+	<scaling units="This table (%) is multiplied to 'FlexFuel - Ignition Compensation', then added to 'Ignition Timing - Base'" expression="(x)*(100/255)" to_byte="x/(100/255)" format="0.0" fineincrement="1" coarseincrement="5" />
 	<table type="Y Axis" name="FlexFuel" storagetype="uint8" storageaddress="0x356F">
 		<scaling units="%" expression="(x)*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
 	</table>
 </table>
 <table type="3D" name="FlexFuel - Ignition Compensation" category="FlexFuel" storagetype="uint8" sizey="10" sizex="10" storageaddress="0x35B8">	
-<!--	<scaling units="&deg;CRK" expression="(x-128)*.375" to_byte="x/.375+128"  format="0.0" fineincrement=".1" coarseincrement="1" /> MULW_SIGNED -->
-	<scaling units="&deg;CRK" expression="((x-128)*.375)" to_byte="(x)/.375+128" format="0.0" fineincrement=".5" coarseincrement="5" /> ADDB_ONES
+	<scaling units="&deg;CRK" expression="((x)*.375)" to_byte="(x)/.375" format="0.0" fineincrement=".5" coarseincrement="5" /> ADDB_ONES
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x35AE" >
 		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
 	</table>
