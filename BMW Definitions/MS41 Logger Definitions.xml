@@ -176,7 +176,18 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                         <conversion units="%" expr="x*100/255" format="0.0" gauge_min="0" gauge_max="100" gauge_step="10" />
                     </conversions>
                 </ecuparam>
-                <ecuparam id="E17" name="O2 Heater - Rear #1" desc="Downstream Lambda Probe Heater - Bank 1 (STATUS_LS_VKAT_HEIZUNG_TV_1)" group="0x0B" subgroup="0x01" target="1">
+                <ecuparam id="E00" name="O2 Heater - Rear #1 TEST F6EE" desc="Downstream Lambda Probe Heater - Bank 1 (STATUS_LS_VKAT_HEIZUNG_TV_1)" group="0x0B" subgroup="0x01" target="1">
+                    <ecu id="1406464,SHINDE1">
+                        <address>0x0000F6EE</address> mrf582 - 1406464 = SAME
+                    </ecu>
+                    <ecu id="1437806">
+                        <address>0x0000F07C</address>
+                    </ecu>
+                    <conversions>
+                        <conversion units="%" expr="x*100/255" format="0.0" gauge_min="0" gauge_max="100" gauge_step="10" />
+                    </conversions>
+                </ecuparam>
+				<ecuparam id="E17" name="O2 Heater - Rear #1" desc="Downstream Lambda Probe Heater - Bank 1 (STATUS_LS_VKAT_HEIZUNG_TV_1)" group="0x0B" subgroup="0x01" target="1">
                     <ecu id="1406464,SHINDE1">
                         <address>0x0000F064</address> mrf582 - 1406464 = SAME
                     </ecu>
@@ -637,7 +648,7 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                         <address>0x0000E809</address> MS41.3
                     </ecu>
                     <conversions>
-                        <conversion units="%" expr="(x-128)*0.392" format="0.0" gauge_min="0" gauge_max="100" gauge_step="5" />
+                        <conversion units="%" expr="(x-128)*0.784" format="0.0" gauge_min="0" gauge_max="100" gauge_step="5" />
                     </conversions>
                 </ecuparam>
 				<ecuparam id="E86" name=".FF_IGN" desc="FlexFuel - Ignition Advance (MS41.3)" group="0x0B" subgroup="0x01" target="1">
