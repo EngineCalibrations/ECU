@@ -333,8 +333,8 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                     <ecu id="1405854,1406464,SHINDE1,1429373,1429861,1432401,1437806,1440176">
                         <address>0x0000E8DE</address>
                     </ecu>
-                    <conversions>
-                        <conversion units="%" storagetype="int16" expr="x*1.526E-3" format="0.00" gauge_min="-50" gauge_max="50" gauge_step="10" />
+                    <conversions> Is this really int16?
+                        <conversion units="%" storagetype="int16" expr="x*1.526E-3" format="0.00" gauge_min="-50" gauge_max="50" gauge_step="10" /> 
                     </conversions>
                 </ecuparam>
                 <ecuparam id="E24" name="Knock Retard - Global" desc="Overall correction applied to total timing" group="0x0B" subgroup="0x01" target="1">
@@ -656,7 +656,9 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                         <address>0x0000E808</address> MS41.3
                     </ecu>
                     <conversions>
-                        <conversion units="°Crk" expr="(x)*0.375" format="0.0" gauge_min="0" gauge_max="48" gauge_step="1" />
+                        <conversion units="°Crk"  storagetype="int8" expr="(x)*0.375" format="0.0" gauge_min="-48" gauge_max="48" gauge_step="1" />												
+						<conversion units="°Crk-80h" storagetype="int8" expr="-(x-128)*0.375" format="0.0" gauge_min="0" gauge_max="48" gauge_step="1" />
+						<conversion units="°Crk-uint8" storagetype="uint8" expr="-(x-256)*0.375" format="0.0" gauge_min="0" gauge_max="48" gauge_step="1" />
                     </conversions>
                 </ecuparam>				
 				<ecuparam id="P7" name=".MAP" desc="Manifold Absolute Pressure (MS41.3)" group="0x0B" subgroup="0x01" target="1">

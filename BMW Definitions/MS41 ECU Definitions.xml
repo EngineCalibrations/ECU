@@ -1015,7 +1015,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>This table modifies Fuel Injector Pulsewidth when VANOS is active. The values in this map are mutliplied to the measured VANOS angle and added or subtracted to "Fuel Injection - Base".</description>
 </table>
 <table type="2D" name="Fuel Injection - Open Loop Enrichment" category="Fuel" storagetype="uint8" sizey="16" userlevel="1">
-<scaling units="Enrichment (%)" expression="x*.392" to_byte="x/.392"  format="0.0" fineincrement="1" coarseincrement="5" />
+<scaling units="Enrichment (%)" expression="x*.392" to_byte="x/.392"  format="0.0" fineincrement="1" coarseincrement="5" /> Change to divide by 16?
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little"  logparam="P8">
 		<scaling units="RPM" expression="x" to_byte="x" format="0" fineincrement="10" coarseincrement="50" />
 	</table>
@@ -2531,6 +2531,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<state name="MAF = xxxx ..... Load  = 1389" data="FF FF" />
 	<state name="MAF = 1024 ..... Load  = 1389" data="42 FF" />
 	<state name="MAF = 2048 ..... Load  = 1389" data="32 FF" />
+	<state name="MAF = 4096 ..... Load  = 5556" data="42 40" />
 </table>
 
 <table type="3D" name="AlphaN - IACV (TPS Compensation)" category="AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="42C8">
@@ -2879,7 +2880,8 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	</table>
 </table>
 <table type="3D" name="FlexFuel - Ignition Compensation" category="FlexFuel" storagetype="uint8" sizey="10" sizex="10" storageaddress="0x35B8">	
-	<scaling units="&deg;CRK" expression="(x*.375)" to_byte="(x)/.375" format="0.0" fineincrement=".5" coarseincrement="5" /> ADDB_ONES
+<!--<scaling units="&deg;CRK" expression="(x*.375)" to_byte="(x)/.375" format="0.0" fineincrement=".5" coarseincrement="5" /> ADDB_ONES -->
+	<scaling units="&deg;CRK" expression="(x-128)*.375" to_byte="(x/.375)+128" format="0.0" fineincrement=".5" coarseincrement="5" /> MULB_SignedFactor + Add
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x35AE" >
 		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
 	</table>
@@ -2959,15 +2961,14 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	
 </rom> 
 
-<!--
 
 <rom base="SS1v0"> End-User Definitions "SS1v0" inherits from SS1v0 which inherits from ID12_24KB
   <romid>
 	
    <internalidaddress>33BB</internalidaddress>
-   <internalidstring>SS1v1</internalidstring>
-   <xmlid>SS1v1</xmlid>
-   <ecuid>SHINDE2</ecuid>
+   <internalidstring>SS1v2</internalidstring>
+   <xmlid>SS1v2</xmlid>
+   <ecuid>SHINDE1</ecuid>
    <year>1996-1999</year>
    <market>USDM</market>
    <make>BMW</make>
@@ -2978,12 +2979,59 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
    <filesize>24kb</filesize>
   </romid>
 
-<table type="Switch" name="ROM Signature Check" category="ROM" sizey="32" storageaddress="0x5F60"> x11F60 bin x5F60 cal x5F60 mem?
-	<state name="ROM Signature Check : ABHISHEK SHINDE  B.S.M.E. MS41.3"  data="41 42 48 49 53 48 45 4b 20 53 48 49 4e 44 45 20 20 42 2e 53 2e 4d 2e 45 2e 20 4d 53 34 31 2e 33" />
+
+<table type="3D" name="MAF (1024 kg/hr Mode)" userlevel="5" />
+<table type="3D" name="MAF (2048 kg/hr Mode) (EDIT)" userlevel="5" />
+<table type="3D" name="MAF (4096 kg/hr Mode) MS41.3" category="Sensors Scaling" storageaddress="0x2AD6" storagetype="uint16" endian="little" sizex="16" sizey="16" userlevel="1" >
+	<scaling units="kg/hr" expression="x*.015625*4" to_byte="x/.015625/4"  format="0.00" fineincrement=".01" coarseincrement=".1" />
+	<table type="Static X Axis" name="0 to 5 Volts - Each row is ~0.3 Volts wide" sizey="16">
+		<data>0.00</data>
+		<data>0.02</data>
+		<data>0.04</data>
+		<data>0.06</data>
+		<data>0.08</data>
+		<data>0.10</data>
+		<data>0.12</data>
+		<data>0.14</data>
+		<data>0.16</data>
+		<data>0.18</data>
+		<data>0.20</data>
+		<data>0.22</data>
+		<data>0.24</data>
+		<data>0.26</data>
+		<data>0.28</data>
+		<data>0.30</data>
+	</table>
+	<table type="Static Y Axis" name="0 to 5 Volts" sizey="16">
+		<data>0.00</data>
+		<data>0.32</data>
+		<data>0.64</data>
+		<data>0.96</data>
+		<data>1.26</data>
+		<data>1.58</data>
+		<data>1.90</data>
+		<data>2.20</data>
+		<data>2.52</data>
+		<data>2.82</data>
+		<data>3.14</data>
+		<data>3.46</data>
+		<data>3.78</data>
+		<data>4.08</data>
+		<data>4.40</data>
+		<data>4.70</data>
+	</table>
+	<description>This is the scaling for the MAF sensor with a limit of 4096 kg/hr. Ensure "2048 kg/hr Mode" is NOT enabled !!!
+	</description>
+</table>
+
+<table type="2D" name="X Axis - Load" category="Fuel / Ignition Timing - Axis" storagetype="uint16" sizex="20" endian="little" storageaddress="3662">
+	<scaling units="mg/stroke" expression="x*.0212*4" to_byte="x/(.0212*4)" format="0.00" fineincrement=".1" coarseincrement="1" />
 </table>
 
 </rom>
 
+
+<!--
 <rom base="SS1v1"> End-User Definitions "SS1v1" inherits from SS1v1 which inherits from SS1v0 which inherits from ID12_24KB
   <romid>
 	
