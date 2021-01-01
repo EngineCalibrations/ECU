@@ -656,9 +656,7 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                         <address>0x0000E808</address> MS41.3
                     </ecu>
                     <conversions>
-                        <conversion units="°Crk"  storagetype="int8" expr="(x)*0.375" format="0.0" gauge_min="-48" gauge_max="48" gauge_step="1" />												
-						<conversion units="°Crk-80h" storagetype="int8" expr="-(x-128)*0.375" format="0.0" gauge_min="0" gauge_max="48" gauge_step="1" />
-						<conversion units="°Crk-uint8" storagetype="uint8" expr="-(x-256)*0.375" format="0.0" gauge_min="0" gauge_max="48" gauge_step="1" />
+                        <conversion units="°Crk"  storagetype="int8" expr="(x)*0.375" format="0.0" gauge_min="-48" gauge_max="48" gauge_step="1" />	
                     </conversions>
                 </ecuparam>				
 				<ecuparam id="P7" name=".MAP" desc="Manifold Absolute Pressure (MS41.3)" group="0x0B" subgroup="0x01" target="1">
