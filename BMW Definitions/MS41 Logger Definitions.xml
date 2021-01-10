@@ -69,14 +69,27 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                     <ecu id="1429861">
                         <address>0x0000FAFC</address>
                     </ecu>
-					<ecu id="1437806,1406464">
+					<ecu id="1437806,1406464,SHINDE1">
                         <address>0x0000FC52</address> mrf582 - 1406464 = E8E4 [EQUIVALENT]
                     </ecu>
+                    <conversions>
+                        <conversion units="mg/stroke" storagetype="uint16" expr="x*0.021195" format="0.00" gauge_min="0" gauge_max="1389" gauge_step="100" />
+                    </conversions>
+                </ecuparam>
+				<ecuparam id="E3" name="..Load.x" desc="Engine Load (MS41.3) | x4 = 5556mg" group="0x0B" subgroup="0x01" target="1">
 					<ecu id="SHINDE1">
-                        <address>0x0000E8E4</address> mrf582 - 1406464 = E8E4 - SD Code outputs to E8E4. Check if also FC52.
+                        <address>0x0000E80A</address> mrf582 - MS41.3 Increased Load Code outputs to E80A
                     </ecu>
                     <conversions>
-                        <conversion units="mg/stroke" storagetype="uint16" expr="x*0.0212" format="0.00" gauge_min="0" gauge_max="1000" gauge_step="100" />
+                        <conversion units="mg/stroke (x4)" storagetype="uint16" expr="x*0.021195*4" format="0.00" gauge_min="0" gauge_max="5556" gauge_step="100" />
+                    </conversions>
+                </ecuparam>
+				<ecuparam id="E7" name="Load_Ratio" desc="Load Ratio (New/Previous)" group="0x0B" subgroup="0x01" target="1">
+                    <ecu id="1406464,SHINDE1">
+                        <address>0x0000EFD5</address> mrf582 - 1406464 = SAME
+                    </ecu>
+                    <conversions>
+                        <conversion units="Mul" expr="x*(1/255)" format="0.000" gauge_min="0" gauge_max="1" gauge_step=".4" />
                     </conversions>
                 </ecuparam>
 				<ecuparam id="E8" name="..IGN_Base" desc="Ignition Angle - Base" group="0x0B" subgroup="0x01" target="1">
@@ -175,18 +188,15 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                     <conversions>
                         <conversion units="%" expr="x*100/255" format="0.0" gauge_min="0" gauge_max="100" gauge_step="10" />
                     </conversions>
-                </ecuparam>
+                </ecuparam><!--
                 <ecuparam id="E00" name="O2 Heater - Rear #1 TEST F6EE" desc="Downstream Lambda Probe Heater - Bank 1 (STATUS_LS_VKAT_HEIZUNG_TV_1)" group="0x0B" subgroup="0x01" target="1">
                     <ecu id="1406464,SHINDE1">
                         <address>0x0000F6EE</address> mrf582 - 1406464 = SAME
                     </ecu>
-                    <ecu id="1437806">
-                        <address>0x0000F07C</address>
-                    </ecu>
                     <conversions>
                         <conversion units="%" expr="x*100/255" format="0.0" gauge_min="0" gauge_max="100" gauge_step="10" />
                     </conversions>
-                </ecuparam>
+                </ecuparam>-->
 				<ecuparam id="E17" name="O2 Heater - Rear #1" desc="Downstream Lambda Probe Heater - Bank 1 (STATUS_LS_VKAT_HEIZUNG_TV_1)" group="0x0B" subgroup="0x01" target="1">
                     <ecu id="1406464,SHINDE1">
                         <address>0x0000F064</address> mrf582 - 1406464 = SAME
@@ -414,7 +424,7 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                         <address>0x00000007</address> ADC
                     </ecu>
                     <conversions>
-                        <conversion units="VDC" storagetype="uint16" expr="x*0.102" format="0.0" gauge_min="0" gauge_max="20" gauge_step="2" />
+                        <conversion units="VDC" storagetype="uint16" expr="x*0.1019" format="0.0" gauge_min="0" gauge_max="20" gauge_step="2" />
                     </conversions>
                 </ecuparam>
                 <ecuparam id="E123" name="V_Knock #1" desc="Knock Sensor Volts - Bank 1 (STATUS_KLOPF_ADC1)" group="0x0B" subgroup="0x01" target="1">
@@ -462,10 +472,19 @@ any damage or injury incurred as a result of these definitions. USE AT YOUR OWN 
                         <address>0x0000DA34</address>
                     </ecu>
                     <conversions>
-                        <conversion units="kg/h" storagetype="uint16" expr="x*0.25" format="0.00" gauge_min="0" gauge_max="65" gauge_step="6" />
-                        <conversion units="g/sec" storagetype="uint16" expr="x*0.06944445" format="0.00" gauge_min="0" gauge_max="65" gauge_step="6" />
+                        <conversion units="kg/h" storagetype="uint16" expr="x*0.25" format="0.00" gauge_min="0" gauge_max="2048" gauge_step="25" />
+                        <conversion units="g/sec" storagetype="uint16" expr="x*0.06944445" format="0.00" gauge_min="0" gauge_max="4500" gauge_step="450" />
                     </conversions>
-                </ecuparam>	
+                </ecuparam>
+                <ecuparam id="E4" name="..MAF.x" desc="Mass Airflow (MS41.3)" group="0x0B" subgroup="0x01" target="1">
+                    <ecu id="SHINDE1">
+                        <address>0x0000E80C</address>
+                    </ecu>
+                    <conversions>
+                        <conversion units="kg/h (x4)" storagetype="uint16" expr="x*0.25*4" format="0.00" gauge_min="0" gauge_max="4096" gauge_step="50" />
+                        <conversion units="g/sec (x4)" storagetype="uint16" expr="x*0.06944445*4" format="0.00" gauge_min="0" gauge_max="18000" gauge_step="1800" />
+                    </conversions>
+                </ecuparam>					
                 <ecuparam id="E9" name=".IACV" desc="Idle Air Control Valve (STATUS_LL_REGLER)" group="0x0B" subgroup="0x01" target="1">
                     <ecu id="1405854,1406464,SHINDE1,1429373,1429861,1432401,1437806,1440176">
                         <address>0x0000DA36</address> mrf582 - 1406464 = E904 [EQUIVALENT]

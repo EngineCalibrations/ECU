@@ -58,7 +58,7 @@
 	name CDATA #REQUIRED
 	data CDATA #REQUIRED >
 ]>
- <!--MS41 ECU DEFINITION FILE (VERSION 0.45.7) 2020-06-20-->
+ <!--MS41 ECU DEFINITION FILE (VERSION 0.46.0) 2021-01-10 -->
  <!--TERMS, CONDITIONS, AND DISCLAIMERS
 - - - - - - - - - - - - - - - - - - - - - - - - -
 WARNING: These definition files are created as the result of the extremely complex and time consuming process of reverse-engineering the factory ECU. Because of this complexity, it is necessary to make certain assumptions and, therefore, it is impossible to always deal in absolutes in regards to representations made by these definitions. In addition, due to this complexity and the numerous variations among different ECUs, it is also impossible to guarantee that the definitions will not contain errors or other bugs. What this all means is that there is the potential for bugs, errors and misrepresentations which can result in damage to your motor, your ECU as well the possibility of causing your vehicle to behave unexpectedly on the road, increasing the risk of death or injury. Modifications to your vehicle's ECU may also be in violation of local, state and federal laws. By using these definition files, either directly or indirectly, you agree to assume 100% of all risk and RomRaider's creators and contributors shall not be held responsible for any damages or injuries you receive. This product is for advanced users only. There are no safeguards in place when tuning with RomRaider. As such, the potential for serious damage and injury still exists, even if the user does not experience any bugs or errors. As always, use at your own risk.
@@ -66,7 +66,7 @@ WARNING: These definition files are created as the result of the extremely compl
 These definitions are created for FREE without any sort of guarantee. The developers cannot be held liable for any damage or injury incurred as a result of these definitions. USE AT YOUR OWN RISK!-->
 <roms>
 
-<rom> BMWMS41BASE
+<rom> BMWMS41BASE 
 <!-- v0.45
 	- Added 7 tables for Accel Enrichment due to MAF
 	- Added 2 tables that deal with Closed Loop - delay, AFR sensor 'neutral' zone.
@@ -333,7 +333,7 @@ www.romraider.com/forum/viewforum.php?f=42
 <table type="3D" name="CH - Fuel Enrichment - Nominal" category="Catalyst Heating" storagetype="uint8"  userlevel="3" sizex="8" sizey="8" >
 	<scaling units="%" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="1" coarseincrement="10" />
@@ -355,7 +355,7 @@ www.romraider.com/forum/viewforum.php?f=42
 <table type="3D" name="COP - Fuel Enrichment - Nominal" category="Catalyst Overheating Protection" storagetype="uint8"  userlevel="1" sizex="6" sizey="6" >
 	<scaling units="%" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="5" coarseincrement="50" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="1" coarseincrement="10" />
@@ -377,7 +377,7 @@ www.romraider.com/forum/viewforum.php?f=42
 	<description>C_TI_COP_INC - This value limits how quickly the calculated Fuel Enrichment due to COP is allowed to change in both the positive and negative direction to prevent sudden changes to the AFR.</description>
 </table>
 <table type="3D" name="COP - Minimum Load" category="Catalyst Overheating Protection" storagetype="uint8"  userlevel="3" sizex="4" sizey="6" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	<table type="X Axis" name="Ignition Correction (Knock + ECT/IAT Compensation)" storagetype="uint8">
 		<scaling units="&deg;CRK" expression="(x-128)*.375" to_byte="x/.375+128" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -387,7 +387,7 @@ www.romraider.com/forum/viewforum.php?f=42
 	<description>IP_MAF_MIN_COP__N_32__IGA_COP - This table sets the minimum Load for COP to be active. Setting these values to max will disable Fuel Enrichment due to COP.</description>
 </table>
 <table type="2D" name="COP - Minimum Load Hystersis" category="Catalyst Overheating Protection" storagetype="uint8"  userlevel="3" sizey="1" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	<table type="Static Y Axis" name="Minimum Load Hystersis" sizey="1">
 		<data></data>
 	</table>
@@ -493,7 +493,7 @@ www.romraider.com/forum/viewforum.php?f=42
 	<description>Maximum Engine Speed to enable Additive Fuel Learning.</description>
 </table>
 <table type="2D" name="Additive Fuel Learning - Maximum Load" category="Adaptive Fuel Learning" storagetype="uint8"  userlevel="1" sizey="1">
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	<table type="Static Y Axis" name="Maximum Load" sizey="1">
 		<data>Maximum Load</data>
 	</table>
@@ -507,7 +507,7 @@ www.romraider.com/forum/viewforum.php?f=42
 	<description>Minimum Engine Speed to enable Multiplicative Fuel Learning.</description>
 </table>
 <table type="2D" name="Multiplicative Fuel Learning - Minimum Load" category="Adaptive Fuel Learning" storagetype="uint8"  userlevel="1" sizey="1">
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	<table type="Static Y Axis" name="Minimum Load" sizey="1">
 		<data>Minimum MAF</data>
 	</table>
@@ -566,7 +566,7 @@ Used in two scenarios; 'First Triggering' and 'New Triggering'. During 'First Tr
 <table type="2D" name="Fuel Enrichment - Increasing TPS - Initial" category="Acceleration" storagetype="uint8"  userlevel="1" sizey="4" >
 	<scaling units="%" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="2" coarseincrement="10" />
 	<table type="Y Axis" name="Load" storagetype="uint8" logparam="E2">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<description>See "Fuel Enrichment - Increasing TPS" for description.</description>
 </table>
@@ -615,7 +615,7 @@ Used in two scenarios; 'First Triggering' and 'New Triggering'. During 'First Tr
 <table type="3D" name="Ignition Retard - Fast Increasing TPS" category="Acceleration" storagetype="uint8"  userlevel="1" sizex="4" sizey="4" >
 	<scaling units="&deg;CRK" expression="(x-128)*.375" to_byte="x/.375+128" format="0.00" fineincrement=".5" coarseincrement="5" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="30" coarseincrement="300" />
@@ -653,7 +653,7 @@ Used in two scenarios; 'First Triggering' and 'New Triggering'. During 'First Tr
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="30" coarseincrement="300" />
 	</table>
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<description>The "Fuel Enrichment - Increasing Load" (FEIL) tables are used to add additional fuel when Load is increasing. If MAF is tuned to represent the correct real world Load, these tables may not need to be modified if using the stock intake manifold while Normally Aspirated.
 	
@@ -788,7 +788,7 @@ Else, a 'Re-Trigger' is possible.
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="30" coarseincrement="300" />
 	</table>
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	</table>
 	<description>IP_TI_FAC_PUR(_AT)__N_32__MAF - During a FT event, this table is multiplied to the "Fuel Enleanment - Decreasing TPS - Multiplicative" table to determine Fuel Enleanment when Throttle is decreasing. However, during a NT event, the value used during the last FT event is multiplied to the "Fuel Enleanment - Decreasing TPS - Multiplicative" table which is then multiplied to the "Fuel Enleanment - Deactivation Factor" table.</description>
 </table>
@@ -851,7 +851,7 @@ Else, a 'Re-Trigger' is possible.
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="30" coarseincrement="300" />
 	</table>
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>	
 	<description>IP_IGA_LGRD_PU(_AT)__N_32__MAF_MMV - "Ignition Retard - Decreasing TPS - Step Size" and "Ignition Retard - Decreasing TPS - Step Size (ECT Compensation)" are added together to determine how gradually Ignition Timing is allowed to decrease when Throttle is slowly reduced. This is used during both "Ignition Retard - Decreasing TPS" and "Ignition Retard - Decreasing TPS (Closed)" but not "Ignition Retard - Fast Decreasing TPS (Closed)". A larger 'step size' will result in a faster change to applied Ignition Timing.</description>
 </table>
@@ -911,14 +911,14 @@ Else, a 'Re-Trigger' is possible.
 	<description>C_N_GRD_MIN_PU - If Engine Speed is greater than "Fast Decreasing TPS  - Min. RPM" or Engine Speed is increasing faster than "Fast Decreasing TPS  - Min. RPM Gradient" allow "Fast Decreasing TPS" detection.</description>
 </table>
 <table type="2D" name="Detection - Fast Decreasing TPS - Min. Load" category="Deceleration" storagetype="uint8"  userlevel="3" sizey="6" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="30" coarseincrement="300" />
 	</table>
 	<description>IP_MAF_MMV_MIN_PU__N_32 - If Load is greater than this value, allow "Fast Decreasing TPS" detection.</description>
 </table> 
 <table type="2D" name="Detection - Fast Decreasing TPS - Min. Load Difference" category="Deceleration" storagetype="uint8"  userlevel="3" sizey="1" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	<table type="Static Y Axis" name=" " sizey="1">
 		<data>Minimum Load Difference</data>
 	</table>
@@ -933,13 +933,7 @@ Else, a 'Re-Trigger' is possible.
 </table>
 
 
-<table type="2D" name="AlphaN - TPS (DTC 12)" category="AlphaN" storagetype="uint8" sizey="6" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
-	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
-		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="100" />
-	</table>
-	<description>AlphaN - TPS (DTC 12)</description>
-</table>
+
 <table type="2D" name="AlphaN - IAT Compensation" category="AlphaN" storagetype="uint8" sizey="6"  >
 	<scaling units="Multiplier %" expression="-1*(x-128)*(200/255)" to_byte="-1*(x/(200/255))+128" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="Y Axis" name="Intake Air Temperature" storagetype="uint8" logparam="P11" >
@@ -958,7 +952,7 @@ Else, a 'Re-Trigger' is possible.
 	<description>AlphaN - IACV (TPS Compensation)</description>
 </table>
 <table type="3D" name="AlphaN - IACV" category="AlphaN" storagetype="uint8" sizex="8" sizey="6" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+	<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="IACV" storagetype="uint16" endian="little" > ISA xE902
 		<scaling units="%" expression="x*(100/65535)" to_byte="x/(100/65535)" format="0" fineincrement="1" coarseincrement="5" />
 	</table>
@@ -968,7 +962,7 @@ Else, a 'Re-Trigger' is possible.
 	<description>AlphaN - IACV</description>
 </table>
 <table type="3D" name="AlphaN - TPS" category="AlphaN" storagetype="uint8" sizex="8" sizey="6" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+	<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="TPS" storagetype="uint8" logparam="P13" > TPS xE8D0
 		<scaling units="TPS%" expression="x*.47" to_byte="x/.47" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -986,12 +980,20 @@ This results in a calculated Load (and Airflow) value that is used throughout th
 AlphaN should never be used with a Forced Induction engine.
 	</description>
 </table>
+<table type="2D" name="AlphaN - TPS (DTC 12)" category="AlphaN" storagetype="uint8" sizey="6" >
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
+	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
+		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description>AlphaN - TPS (DTC 12)</description>
+</table>
 
+<table type="3D" name="SD - Load" category="Speed Density" />
 
 <table type="3D" name="Fuel Injection - Base" category="Fuel" storagetype="uint16" endian="little" sizex="12" sizey="16" userlevel="1" >
 	<scaling units="Injector Pulsewidth (ms)" expression="x*.0053" to_byte="x/.0053" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little"  logparam="P8" >
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
@@ -1008,7 +1010,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Fuel Injection - Base - VANOS Correction" category="Fuel" storagetype="uint16" endian="little" sizex="12" sizey="16" userlevel="1" >
 	<scaling units="Multiplier" expression="(x-32768)*.001526" to_byte="(x/.001526)+32768" format="0.0000" fineincrement=".001" coarseincrement=".01" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" >
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
@@ -1032,7 +1034,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Fuel Injection - Warmup Enrichment" category="Fuel" storagetype="uint8"  userlevel="1" sizex="8" sizey="8" >
 	<scaling units="Enrichment (%)" expression="x*.392" to_byte="x/.392" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="1" coarseincrement="10" />
@@ -1092,7 +1094,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Ignition Timing - Base" category="Ignition Timing" storagetype="uint8" sizex="12" sizey="16" userlevel="1" >
 	<scaling units="&deg;BTDC" expression="(x*.375)-23.6" to_byte="(x+23.6)/.375" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8">
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
@@ -1102,7 +1104,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Ignition Timing - Base 2" category="Ignition Timing" storagetype="uint8" sizex="12" sizey="16" userlevel="1" >                                                                                                               
 	<scaling units="&deg;BTDC" expression="(x*.375)-23.6" to_byte="(x+23.6)/.375" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8">
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
@@ -1112,7 +1114,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Ignition Timing - Base - VANOS Correction" category="Ignition Timing" storagetype="uint8" sizex="12" sizey="16" userlevel="1" >
 	<scaling units="Multiplier" expression="(x-128)*.392" to_byte="x/.392+128" format="0.00" fineincrement="1" coarseincrement="2" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" >
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="1" coarseincrement="2" />
@@ -1133,7 +1135,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Ignition Timing - Base - ECT/IAT Compensation - Nominal" category="Ignition Timing" storagetype="uint8" sizex="6" sizey="8" userlevel="1" >
 	<scaling units="&deg;CRK" expression="(128-x)*.375" to_byte="128-(x/.375)" format="0.00" fineincrement=".1" coarseincrement="1" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="100" />
@@ -1143,7 +1145,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Ignition Timing - Idle - Base" category="Ignition Timing" storagetype="uint8"  userlevel="1" sizex="4" sizey="4" logparam="P10">
 	<scaling units="&deg;BTDC" expression="x*.375-23.6" to_byte="(x+23.6)/.375" format="0.0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2">
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" >
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
@@ -1181,7 +1183,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Ignition Timing - Anti-Jerk" category="Ignition Timing" storagetype="uint8" sizex="6" sizey="8" userlevel="1" >
 	<scaling units="&deg;BTDC" expression="(x-128)*.375" to_byte="x/.375+128" format="0.00" fineincrement=".5" coarseincrement="5" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="100" />
@@ -1190,7 +1192,7 @@ AlphaN should never be used with a Forced Induction engine.
 </table>
 
 <table type="2D" name="X Axis - Load" category="Fuel / Ignition Timing - Axis" storagetype="uint16" sizex="12" endian="little" userlevel="1" >
-	<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212"  format="0.00" fineincrement=".01" coarseincrement=".1" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/65535)" to_byte="x/(1389/65535)"  format="0.00" fineincrement=".01" coarseincrement=".1" />
 	<table type="Static Y Axis" name="Columns" sizex="12">
 		<data>1</data>
 		<data>2</data>
@@ -1239,7 +1241,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>If RPM is less than this value, DTC "212 - VANOS Bank 1 Mechanical" check will be disabled</description>
 </table>
 <table type="3D" name="VANOS - Min. Load (Light Throttle) (AT)" category="VANOS" storagetype="uint8"  userlevel="1" sizex="5" sizey="11" >
-	<scaling units="(mg/stroke)" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2" >
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -1249,7 +1251,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>During "Light Throttle" if Load is greater than the values in this table, VANOS will be activated. This table is for Automatic Transmission cars.</description>
 </table>
 <table type="3D" name="VANOS - Min. Load (Light Throttle) (MT)" category="VANOS" storagetype="uint8" sizex="5" sizey="11" userlevel="1" >
-	<scaling units="(mg/stroke)" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2" >
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -1576,7 +1578,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Ignition Retard - ASC" category="Special Functions/Thresholds" storagetype="uint8"  userlevel="1" sizex="4" sizey="4" >
 	<scaling units="&deg;CRK" expression="(x-128)*.375" to_byte="x/.375+128" format="0.00" fineincrement=".5" coarseincrement="5" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="30" coarseincrement="300" />
@@ -1960,7 +1962,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>This is the scaling for the MAF sensor in the stock 1024 kg/hr mode.</description>
 </table>
 
-<table type="3D" name="MAF (1024 kg/hr Mode)" category="Sensors Scaling" storagetype="uint16" endian="little" sizex="16" sizey="16" userlevel="2" >
+<table type="3D" name="MAF" category="Sensors Scaling" storagetype="uint16" endian="little" sizex="16" sizey="16" userlevel="2" >
 	<scaling units="kg/hr" expression="x*.015625" to_byte="x/.015625"  format="0.00" fineincrement=".01" coarseincrement=".1" />
 	<table type="Static X Axis" name="0 to 5 Volts - Each row is ~0.3 Volts wide" sizey="16">
 		<data>0.00</data>
@@ -2073,7 +2075,7 @@ AlphaN should never be used with a Forced Induction engine.
 
 
 <table type="3D" name="Knock Detection - Min. Load" category="Knock" storagetype="uint8" sizex="4" sizey="8" userlevel="2" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	<table type="X Axis" name="Coolant Temperature" storagetype="uint8" logparam="P2" >
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -2085,7 +2087,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Max. Knock Retard" category="Knock" storagetype="uint8" sizex="4" sizey="8" userlevel="2" >
 	<scaling units="&deg;CRK" expression="(x-128)*.375" to_byte="x/.375+128" format="0.0" fineincrement=".5" coarseincrement="2" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" >
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="30" coarseincrement="300" />
@@ -2123,7 +2125,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Threshold - Multiplicative Factor - Cylinder 1" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="Multiplicative Factor" expression="x*.0313" to_byte="x/.0313" format="0.0" fineincrement=".3" coarseincrement="3" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2133,7 +2135,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Threshold - Multiplicative Factor - Cylinder 5" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="Multiplicative Factor" expression="x*.0313" to_byte="x/.0313" format="0.0" fineincrement=".3" coarseincrement="3" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2143,7 +2145,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Threshold - Multiplicative Factor - Cylinder 3" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="Multiplicative Factor" expression="x*.0313" to_byte="x/.0313" format="0.0" fineincrement=".3" coarseincrement="3" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2153,7 +2155,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Threshold - Multiplicative Factor - Cylinder 6" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="Multiplicative Factor" expression="x*.0313" to_byte="x/.0313" format="0.0" fineincrement=".3" coarseincrement="3" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2163,7 +2165,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Threshold - Multiplicative Factor - Cylinder 2" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="Multiplicative Factor" expression="x*.0313" to_byte="x/.0313" format="0.0" fineincrement=".3" coarseincrement="3" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2173,7 +2175,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Threshold - Multiplicative Factor - Cylinder 4" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="Multiplicative Factor" expression="x*.0313" to_byte="x/.0313" format="0.0" fineincrement=".3" coarseincrement="3" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2184,7 +2186,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - Start - Cylinder 1" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375" to_byte="x/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2194,7 +2196,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - Start - Cylinder 5" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375" to_byte="x/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2204,7 +2206,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - Start - Cylinder 3" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375" to_byte="x/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2214,7 +2216,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - Start - Cylinder 6" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375" to_byte="x/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2224,7 +2226,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - Start - Cylinder 2" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375" to_byte="x/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2234,7 +2236,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - Start - Cylinder 4" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375" to_byte="x/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2244,7 +2246,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - End - Cylinder 1" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375+12" to_byte="(x-12)/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2254,7 +2256,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - End - Cylinder 5" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375+12" to_byte="(x-12)/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2264,7 +2266,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - End - Cylinder 3" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375+12" to_byte="(x-12)/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2274,7 +2276,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - End - Cylinder 6" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375+12" to_byte="(x-12)/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2284,7 +2286,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - End - Cylinder 2" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375+12" to_byte="(x-12)/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2294,7 +2296,7 @@ AlphaN should never be used with a Forced Induction engine.
 <table type="3D" name="Knock Detection Window - End - Cylinder 4" category="Knock" storagetype="uint8" sizex="4" sizey="16" userlevel="3" >
 	<scaling units="(&deg;) ATDC" expression="x*.375+12" to_byte="(x-12)/.375" format="0.0" fineincrement=".4" coarseincrement="4" />
 	<table type="X Axis" name="Load" storagetype="uint8">
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8">
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="500" />
@@ -2302,7 +2304,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>The tables for end of the control window to cylinders and knock sensors.</description>
 </table>
 <table type="2D" name="Knock Tables X Axis (Load)" category="Knock" storagetype="uint8" sizey="4" endian="little" userlevel="4" >
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="#" fineincrement="5" coarseincrement="50" />
+	<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="#" fineincrement="5" coarseincrement="50" />
 	<table type="Static Y Axis" name="Columns - Changes here affect all other Knock Window maps as well" sizey="4">
 		<data> 1</data>
 		<data> 2</data>
@@ -2478,8 +2480,7 @@ AlphaN should never be used with a Forced Induction engine.
 </rom>
   
 
-
-<rom base="12"> End-User Definitions "12" inherits from standard 24KB ID12 since it is just below
+<rom base="ID12_BASE">	MS41.3 - SS1v0
   <romid>
 	
    <internalidaddress>33BB</internalidaddress>
@@ -2496,10 +2497,13 @@ AlphaN should never be used with a Forced Induction engine.
    <filesize>24kb</filesize>   
   </romid>
 
+
+<!--<table name="MAF (2048 kg/hr Mode) (EDIT)" storageaddress="0x2AD6" />-->
+
 <table type="2D" name="Detection - Open Loop Enrichment" category="Fuel" storagetype="uint8" sizey="16" storageaddress="0x12AE">
 	<!--<scaling units="TPS (%)" expression="x*.47" to_byte="x/.47"  format="0" fineincrement="1" coarseincrement="10" /> -->
-	<scaling units="This table defines the Load threshold beyond which Fuel Injection - Open Loop Enrichment mode is enabled."
-		expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="100" />
+	<scaling units="This table defines the Load [Limit = 1389] threshold beyond which Fuel Injection - Open Loop Enrichment mode is enabled."
+		expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="100" />
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" storageaddress="0x8B2">
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
 	</table>
@@ -2575,7 +2579,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>AlphaN - IACV (TPS Compensation)</description>
 </table>
 <table type="3D" name="AlphaN - IACV" category="AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="4188">
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+	<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="IACV" storagetype="uint16" endian="little" storageaddress="4028"> ISA xE902
 		<scaling units="%" expression="x*(100/65535)" to_byte="x/(100/65535)" format="0" fineincrement="1" coarseincrement="5" />
 	</table>
@@ -2585,7 +2589,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>AlphaN - IACV</description>
 </table>
 <table type="3D" name="AlphaN - TPS" category="AlphaN" storagetype="uint8" sizex="16" sizey="20" storageaddress="4048">
-	<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+	<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="X Axis" name="TPS" storagetype="uint8" logparam="P13" storageaddress="4016"> TPS xE8D0
 		<scaling units="TPS%" expression="x*.47" to_byte="x/.47" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -2603,9 +2607,9 @@ This results in a calculated Load (and Airflow) value that is used throughout th
 AlphaN should never be used with a Forced Induction engine.
 	</description>
 </table>
-<table type="Switch" name="AlphaN or MAF" category="AlphaN" sizey="1" storageaddress="0x33E0">
-	<state name="AlphaN"  data="01" />
-	<state name="MAF"     data="FF" />
+<table type="Switch" name="AlphaN or MAF or Speed Density" category="Fuel" sizey="1" storageaddress="0x33E0">
+	<state name="AlphaN Mode"  data="01" />	
+	<state name="MAF Mode"     data="FF" />
 	<description>Select applicable metering mode.</description>
 </table>
 <table type="Switch" name="DTC 8 - Air Flow Meter (HFM) x252" category="AlphaN" sizey="1" storageaddress="0x252">
@@ -2624,8 +2628,8 @@ AlphaN should never be used with a Forced Induction engine.
 </table>
 <table type="3D" name="Fuel Injection - Base" category="Fuel" storagetype="uint16" endian="little" sizex="20" sizey="20" storageaddress="369E">
 	<scaling units="Injector Pulsewidth (ms)" expression="x*.0053" to_byte="x/.0053" format="0.00" fineincrement=".1" coarseincrement="1" />
-	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little"  logparam="P8" storageaddress="3638">
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
@@ -2634,8 +2638,8 @@ AlphaN should never be used with a Forced Induction engine.
 </table>
 <table type="3D" name="Fuel Injection - Base - VANOS Correction" category="Fuel" storagetype="uint16" endian="little" sizex="20" sizey="20" storageaddress="39BE">
 	<scaling units="Multiplier" expression="(x-32768)*.001526" to_byte="(x/.001526)+32768" format="0.0000" fineincrement=".001" coarseincrement=".01" />
-	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little"  logparam="P8" storageaddress="3638">
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
@@ -2644,8 +2648,8 @@ AlphaN should never be used with a Forced Induction engine.
 </table>
 <table type="3D" name="Ignition Timing - Base" category="Ignition Timing" storagetype="uint8" sizex="20" sizey="20" storageaddress="3CDE" >
 	<scaling units="&deg;BTDC" expression="(x*.375)-23.6" to_byte="(x+23.6)/.375" format="0.00" fineincrement=".1" coarseincrement="1" />
-	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little"  logparam="P8" storageaddress="3638">
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
@@ -2654,8 +2658,8 @@ AlphaN should never be used with a Forced Induction engine.
 </table>
 <table type="3D" name="Ignition Timing - Base - VANOS Correction" category="Ignition Timing" storagetype="uint8" sizex="20" sizey="20" storageaddress="3E6E" >
 	<scaling units="Multiplier" expression="(x-128)*.392" to_byte="x/.392+128" format="0.00" fineincrement="1" coarseincrement="2" />
-	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E2" storageaddress="3662">
-		<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212" format="#" fineincrement="1" coarseincrement="10" />
+	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="#" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" storageaddress="3638">
 		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="1" coarseincrement="2" />
@@ -2663,7 +2667,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>This table modifies Ignition Timing when VANOS is active. The values in this map are mutliplied to the measured VANOS angle and added or subtracted to "Ignition Timing - Base".</description>
 </table>
 <table type="2D" name="X Axis - Load" category="Fuel / Ignition Timing - Axis" storagetype="uint16" sizex="20" endian="little" storageaddress="3662">
-	<scaling units="mg/stroke" expression="x*.0212" to_byte="x/.0212"  format="0.00" fineincrement=".01" coarseincrement=".1" />
+	<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/65535)" to_byte="x/(1389/65535)"  format="0.00" fineincrement=".02" coarseincrement=".1" />
 	<table type="Static Y Axis" name="Columns" sizex="20">
 		<data>1</data>
 		<data>2</data>
@@ -2913,7 +2917,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <!--<scaling units="&deg;CRK" expression="(x*.375)" to_byte="(x)/.375" format="0.0" fineincrement=".5" coarseincrement="5" /> ADDB_ONES -->
 	<scaling units="&deg;CRK" expression="(x-128)*.375" to_byte="(x/.375)+128" format="0.0" fineincrement=".5" coarseincrement="5" /> MULB_SignedFactor + Add
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x35AE" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="5" coarseincrement="50" />
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" storageaddress="0x35A3" >
 	<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="1" coarseincrement="10" />
@@ -2930,18 +2934,18 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 </table>
 <!--Boost Map 1 - Y Axis Type
 <table type="Switch" name="Boost Map 1 - Y Axis Type" category="Boost Control PWM" sizey="2" storageaddress="0x33E6" >
-	<state name="Load" data="E5 E8" />
+	<state name="Load" data="0B E8" />
 	<description>Select Y Axis type for Boost Map 1.</description>
 </table> -->
 <!--Boost Map 2 - Y Axis Type
 <table type="Switch" name="Boost Map 2 - Y Axis Type" category="Boost Control PWM" sizey="2" storageaddress="0x33E8" >
-	<state name="Load" data="E5 E8" />
+	<state name="Load" data="0B E8" />
 	<description>Select Y Axis type for Boost Map 2.</description>
 </table> -->
 <table type="3D" name="Boost PWM - Nominal - Map 1" category="Boost Control PWM" storagetype="uint8" sizex="8" sizey="8" storageaddress="0x3466" >
 	<scaling units="Multiply %" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x3418" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" storageaddress="0x340F" >
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="100" />
@@ -2951,7 +2955,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table type="3D" name="Boost PWM - Nominal - Map 2" category="Boost Control PWM" storagetype="uint8" sizex="8" sizey="8" storageaddress="0x34A8" >
 	<scaling units="Multiply %" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
 	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x3421" >
-		<scaling units="mg/stroke" expression="x*5.45" to_byte="x/5.45" format="0" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
 	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" storageaddress="0x340F" >
 		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="100" />
@@ -2988,13 +2992,50 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	</table>
 	<description> This is multiplied to the Boost ControL PWM calculated thus far.</description>
 </table>
-	
+
+<table type="3D" name="SD - Load" category="Speed Density"  storagetype="uint16" endian="little" sizex="20" sizey="20" storageaddress="0x443C">
+	<scaling units="mg/stroke *Limit = 1389* (Measured before Port Temperature Compensation)" expression="x*(1389/65535)" to_byte="x/(1389/65535)" format="0.00" fineincrement=".02" coarseincrement="5" />
+	<table type="X Axis" name="Manifold Absolute Pressure (MAP)" storagetype="uint16" endian="little" storageaddress="0x47A4">
+		<scaling units="kPa" expression="x*.01" to_byte="x/.01" format="0" fineincrement="1" coarseincrement="10" />
+	</table>
+	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little"  logparam="P8" storageaddress="0x3638">
+		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description>Tune this table to hit your desired Load that ensures proper fueling.</description>
+</table>
+<table type="2D" name="SD - Port Temp. Compensation" category="Speed Density" storagetype="uint16" sizey="16" storageaddress="0x440A" >
+	<scaling units="Multiplicative %" expression="(x-32768)*(200/65535)" to_byte="x/(200/65535)+32768" format="0.00" fineincrement=".01" coarseincrement="5" />
+	<table type="Y Axis" name="Port Temperature" storagetype="uint8" storageaddress="0x442B">
+		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description> This is multiplied to the derived "SD - Load" table to compensate for slow and fast air moving through the Intake Manifold at varying Air Velocities as applicable per a given cell relating RPM and Load.</description>
+</table>	
+<table type="3D" name="SD - Port Temp. (IAT vs ECT)" category="Speed Density" storagetype="uint8" sizex="5" sizey="5" storageaddress="0x4768" >
+	<scaling units="Blend Weight (vs IAT) % - For Pure IAT, use 100%" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
+	<table type="X Axis" name="Load (Measured)" storagetype="uint8" storageaddress="0x4763" >
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
+	</table>
+	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" storageaddress="0x475D" >
+		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description> This is multiplied to "Boost PWM - ECT/IAT Compensation" to modify it for various intake and coolant temperature conditions.</description>
+</table>	
+<table type="3D" name="SD - Load Smoothing" category="Speed Density" storagetype="uint8" sizex="5" sizey="5" storageaddress="0x4786" >
+	<scaling units="Smoothing Weight % - Do Not Set To Zero" expression="x*(100/255)" to_byte="x/(100/255)" format="0" fineincrement="1" coarseincrement="5" />
+	<table type="X Axis" name="Load (Port-Temp Compensated)" storagetype="uint8" storageaddress="0x4763" >
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
+	</table>
+	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" storageaddress="0x475D" >
+		<scaling units="RPM" expression="x*32" to_byte="x/32" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description> This is multiplied to "Boost PWM - ECT/IAT Compensation" to modify it for various intake and coolant temperature conditions.</description>
+</table>	
+
 </rom> 
 
 
-<rom base="SS1v0"> End-User Definitions "SS1v0" inherits from SS1v0 which inherits from ID12_24KB
-  <romid>
-	
+<rom base="SS1v0">		MS41.3 - SS1v2
+  <romid>	
    <internalidaddress>33BB</internalidaddress>
    <internalidstring>SS1v2</internalidstring>
    <xmlid>SS1v2</xmlid>
@@ -3009,95 +3050,112 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
    <filesize>24kb</filesize>
   </romid>
 
+<table type="Switch" name="*** DO NOT FLASH FILE : MS41.3 Version Check" category="*** CUSTOM  MS41.3  FEATURES BELOW ***" sizey="1" userlevel="5" storageaddress="0x33EC"> x173EC bin x133EC mem
+	<state name="2020, December" data="FD" />
+	<state name="2021, January"  data="FC" />
+	<description>If this table displays a warning upon loading ROM, there is a problem with the file or this definition.
+	</description>
+</table>
+<table type="Switch" name="AlphaN or MAF or Speed Density" category="Fuel" sizey="1" storageaddress="0x33E0">
+	<state name="AlphaN Mode"  data="01" />	
+	<state name="Speed Density Mode"  data="02" />
+	<state name="MAF Mode"     data="FF" />
+	<description>Select applicable metering mode.</description>
+</table>
 
-<table type="3D" name="MAF (1024 kg/hr Mode)" userlevel="5" />
-<table type="3D" name="MAF (2048 kg/hr Mode) (EDIT)" userlevel="5" />
-<table type="3D" name="MAF (4096 kg/hr Mode) MS41.3" category="Sensors Scaling" storageaddress="0x2AD6" storagetype="uint16" endian="little" sizex="16" sizey="16" userlevel="1" >
-	<scaling units="kg/hr" expression="x*.015625*4" to_byte="x/.015625/4"  format="0.00" fineincrement=".01" coarseincrement=".1" />
-	<table type="Static X Axis" name="0 to 5 Volts - Each row is ~0.3 Volts wide" sizey="16">
-		<data>0.00</data>
-		<data>0.02</data>
-		<data>0.04</data>
-		<data>0.06</data>
-		<data>0.08</data>
-		<data>0.10</data>
-		<data>0.12</data>
-		<data>0.14</data>
-		<data>0.16</data>
-		<data>0.18</data>
-		<data>0.20</data>
-		<data>0.22</data>
-		<data>0.24</data>
-		<data>0.26</data>
-		<data>0.28</data>
-		<data>0.30</data>
-	</table>
-	<table type="Static Y Axis" name="0 to 5 Volts" sizey="16">
-		<data>0.00</data>
-		<data>0.32</data>
-		<data>0.64</data>
-		<data>0.96</data>
-		<data>1.26</data>
-		<data>1.58</data>
-		<data>1.90</data>
-		<data>2.20</data>
-		<data>2.52</data>
-		<data>2.82</data>
-		<data>3.14</data>
-		<data>3.46</data>
-		<data>3.78</data>
-		<data>4.08</data>
-		<data>4.40</data>
-		<data>4.70</data>
-	</table>
+<table type="3D" name="MAF" category="Sensors Scaling">
+	<scaling units="kg/hr [Limit = 4096]" expression="x*.015625*4" to_byte="x/.015625/4"  format="0.00" fineincrement=".01" coarseincrement=".1" />
 	<description>This is the scaling for the MAF sensor with a limit of 4096 kg/hr. Ensure "2048 kg/hr Mode" is NOT enabled !!!
 	</description>
 </table>
 
-<table type="2D" name="X Axis - Load" category="Fuel / Ignition Timing - Axis" storagetype="uint16" sizex="20" endian="little" storageaddress="3662">
-	<scaling units="mg/stroke" expression="x*.0212*4" to_byte="x/(.0212*4)" format="0.00" fineincrement=".1" coarseincrement="1" />
+<table type="2D" name="X Axis - Load"> Base Fuel/Timing Maps
+	<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="0.00" fineincrement=".1" coarseincrement="1" />
+</table>
+<table type="3D" name="Fuel Injection - Base">
+	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
+		<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="#" fineincrement="1" coarseincrement="10" />
+	</table>
+</table>
+
+<table type="3D" name="SD - Load">
+	<scaling units="mg/stroke  *Limit = 5556* (Measured before Port Temperature Compensation)" expression="x*(1389/65535)*4" to_byte="x/(1389/65535*4)" format="0.00" fineincrement=".1" coarseincrement="5" />
+</table>
+<table type="3D" name="SD - Port Temp. (IAT vs ECT)">
+	<table type="X Axis" name="Load (Measured)" storageaddress="0x4763" >
+		<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/255)*4" to_byte="x/(1389/255)/4" format="0" fineincrement="20" coarseincrement="100" />
+	</table>	
+</table>
+<table type="3D" name="SD - Load Smoothing">
+	<table type="X Axis" name="Load (Port Temp Compensated)" storageaddress="0x4763" >
+		<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/255)*4" to_byte="x/(1389/255)/4" format="0" fineincrement="20" coarseincrement="100" />
+	</table>	
+</table>	
+
+<table type="3D" name="Boost PWM - Nominal - Map 1">
+	<table type="X Axis" name="Load" storageaddress="0x3418" >
+		<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/255)*4" to_byte="x/(1389/255)/4" format="0" fineincrement="20" coarseincrement="100" />
+	</table>
+</table>
+<table type="3D" name="Boost PWM - Nominal - Map 2">
+	<table type="X Axis" name="Load" storageaddress="0x3421" >
+		<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/255)*4" to_byte="x/(1389/255)/4" format="0" fineincrement="20" coarseincrement="100" />
+	</table>
+</table>
+
+<table type="3D" name="FlexFuel - Ignition Compensation">
+	<table type="X Axis" name="Load" storageaddress="0x35AE">
+		<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/255)*4" to_byte="x/(1389/255)/4" format="0" fineincrement="20" coarseincrement="100" />
+	</table>
+</table>
+
+<table type="3D" name="AlphaN - IACV">
+	<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/255)*4" to_byte="x/(1389/255)/4" format="0" fineincrement="20" coarseincrement="100" />
+</table>
+<table type="3D" name="AlphaN - TPS">
+	<scaling units="mg/stroke *Limit = 5556*" expression="x*(1389/255)*4" to_byte="x/(1389/255)/4" format="0" fineincrement="20" coarseincrement="100" />
 </table>
 
 </rom>
 
 
-<!--
-<rom base="SS1v1"> End-User Definitions "SS1v1" inherits from SS1v1 which inherits from SS1v0 which inherits from ID12_24KB
-  <romid>
-	
-   <internalidaddress>33BB</internalidaddress>
-   <internalidstring>SS1v2</internalidstring>
-   <xmlid>SS1v2</xmlid>
-   <ecuid>SHINDE3</ecuid>
-   <year>1996-1999</year>
-   <market>USDM</market>
-   <make>BMW</make>
-   <model>E36</model>
-   <submodel>MS41.3 (24KB)</submodel>
-   <transmission>MT/AT</transmission>
-   <memmodel>80C166W-M-T3</memmodel>
-   <filesize>24kb</filesize>
-  </romid>
-
-<table type="Switch" name="ROM Signature Check" category="ROM" sizey="32" storageaddress="0x5F60"> x11F60 bin x5F60 cal x5F60 mem?
-	<state name="ROM Signature Check : ABHISHEK SHINDE  B.S.M.E. MS41.3"  data="41 42 48 49 53 48 45 4b 20 53 48 49 4e 44 45 20 20 42 2e 53 2e 4d 2e 45 2e 20 4d 53 34 31 2e 33" />
-</table>
-
-</rom>
-
--->
-
-
-
-<rom base="BMWMS41BASE"> ID12  24KB - ECUID = 1406464
+<rom base="ID12_BASE"> ID12  24KB - ECUID = 1406464
 <!-- In this ROM specific section define only the attributes missing or that need
      to be changed compared to the common table data and axis attributes in the BASE.
      This will typically be the storageaddress and sometimes the size entries. -->
   <romid>
    <internalidaddress>E</internalidaddress>
    <internalidstring>12</internalidstring>
-   <xmlid>12</xmlid>
-   <ecuid>1406464</ecuid> 
+   <ecuid>1406464</ecuid>
+   <xmlid>12</xmlid>   
+   <year>1996-1999</year>
+   <market>USDM</market>
+   <make>BMW</make>
+   <model>E36 M3</model>
+   <submodel>MS41.2 (24KB)</submodel>
+   <transmission>MT/AT</transmission>
+   <memmodel>80C166W-M-T3</memmodel>
+   <filesize>24kb</filesize>
+  </romid>
+
+<table name="MAF (2048 kg/hr Mode) (EDIT)" storageaddress="0x2AD6" >
+<scaling units="kg/hr [Limit = 2048 kg/hr]" format="0.00" />
+</table>
+<table name="AlphaN - TPS (DTC 12)" storageaddress="0x4BE" >
+	<table type="Y Axis" storageaddress="0x3D2" />
+</table>
+</rom>
+
+
+<rom base="BMWMS41BASE"> *ID12_BASE*  24KB - ECUID = 1406464 AND SHINDE1
+<!-- In this ROM specific section define only the attributes missing or that need
+     to be changed compared to the common table data and axis attributes in the BASE.
+     This will typically be the storageaddress and sometimes the size entries. -->
+  <romid>
+   <!--<internalidaddress>E</internalidaddress>
+   <internalidstring>12</internalidstring>
+   <ecuid>1406464</ecuid> -->
+   <xmlid>ID12_BASE</xmlid>   
    <year>1996-1999</year>
    <market>USDM</market>
    <make>BMW</make>
@@ -3341,9 +3399,9 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 </table>
 
 <table name="MAF (1024 kg/hr Mode) (256x1)" storageaddress="0x2AD6" />
-<table name="MAF (1024 kg/hr Mode)" storageaddress="0x2AD6" />
-<table name="MAF (2048 kg/hr Mode) (EDIT)" storageaddress="0x2AD6" />
-<table name="MAF Sensor Scaling (16x16)" storageaddress="0x2AD6" />
+<table name="MAF" storageaddress="0x2AD6" >
+<scaling units="kg/hr [Limit = 1024 kg/hr]" format="0.00" />
+</table>
 
 
    <table name="DTC 212 - Minimum RPM" storageaddress="0x2CF">
@@ -3472,9 +3530,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="AlphaN - IAT Compensation" storageaddress="0x1D68" >
 	<table type="Y Axis" storageaddress="0x1C51" />
 </table>
-<table name="AlphaN - TPS (DTC 12)" storageaddress="0x4BE" >
-	<table type="Y Axis" storageaddress="0x3D2" />
-</table>
+
 <table  name="AlphaN - IACV" storageaddress="0x504" >
 	<table type="X Axis" storageaddress="0x402" />
 	<table type="Y Axis" storageaddress="0x3D2" />
@@ -3739,6 +3795,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
   
 </rom>  
 
+
 <rom base="BMWMS41BASE"> ID12 256KB - ECUID = 1406464
 <!-- In this ROM specific section define only the attributes missing or that need
      to be changed compared to the common table data and axis attributes in the BASE.
@@ -3773,7 +3830,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="Oxygen Sensor" storageaddress="0x2BC38" />
 <table name="Oxygen Sensor Heater" storageaddress="0x2BC78" />
 
-<table name="MAF (1024 kg/hr Mode)" storageaddress="0x16AD6" />
+<table name="MAF" storageaddress="0x16AD6" />
 <table name="MAF Mode - 2048 kg/hr" storageaddress="0x30ED5" />
 <table name="MAF (2048 kg/hr Mode) (EDIT)" storageaddress="0x16AD6" />
 <table name="MAF Sensor Scaling (16x16)" storageaddress="0x16AD6" />
@@ -3808,7 +3865,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="Byte 7" storageaddress="0x7" />
 <table name="Byte 8" storageaddress="0x8" />  
   <table name="MAF (1024 kg/hr Mode) (256x1)" storageaddress="0x2892" />
-  <table name="MAF (1024 kg/hr Mode)" storageaddress="0x2892" />
+  <table name="MAF" storageaddress="0x2892" />
 
   <table name="Fuel Injection - Base" storageaddress="0x9CA">
    <table type="X Axis" storageaddress="0x74C" />
@@ -3942,7 +3999,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="Byte 7" storageaddress="0x7" />
 <table name="Byte 8" storageaddress="0x8" />  
   <table name="MAF (1024 kg/hr Mode) (256x1)" storageaddress="0x2DC0" />
-  <table name="MAF (1024 kg/hr Mode)" storageaddress="0x2DC0" />
+  <table name="MAF" storageaddress="0x2DC0" />
 
 <table name="Engine Speed Limiter (Hard Limiter)" storageaddress="0x2D8"> </table>
 <table name="Vehicle Speed Limit" storageaddress="0x3C4"/>
@@ -4038,7 +4095,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="Byte 7" storageaddress="0x7" />
 <table name="Byte 8" storageaddress="0x8" />  
   <table name="MAF (1024 kg/hr Mode) (256x1)" storageaddress="0x2B4A" />
-  <table name="MAF (1024 kg/hr Mode)" storageaddress="0x2B4A" />
+  <table name="MAF" storageaddress="0x2B4A" />
 <table name="ECT Sensor Scaling" storageaddress="0x5A6">
    <table type="X Axis" storageaddress="0x502" />
   </table>
@@ -4629,7 +4686,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="Byte 7" storageaddress="0x7" />
 <table name="Byte 8" storageaddress="0x8" />  
 <table name="MAF (1024 kg/hr Mode) (256x1)" storageaddress="0x2C74" />
-<table name="MAF (1024 kg/hr Mode)" storageaddress="0x2C74" />
+<table name="MAF" storageaddress="0x2C74" />
 
 <table name="Engine Speed Limiter (Hard Limiter)" storageaddress="0x2B5"> </table>
 <table name="Vehicle Speed Limit" storageaddress="0x39A"/>
@@ -4752,7 +4809,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	<table type="X Axis" storageaddress="0x635" />
 </table>
 <table name="MAF (1024 kg/hr Mode) (256x1)" storageaddress="0x2DB6" />
-<table name="MAF (1024 kg/hr Mode)" storageaddress="0x2DB6" />
+<table name="MAF" storageaddress="0x2DB6" />
 <table name="MAF (2048 kg/hr Mode) (EDIT)" storageaddress="0x2DB6" />
 
 <table name="CH - Duration - Idle Speed Target Increase" storageaddress="0x143E">
