@@ -3120,9 +3120,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 
 
 <rom base="ID12_BASE"> ID12  24KB - ECUID = 1406464
-<!-- In this ROM specific section define only the attributes missing or that need
-     to be changed compared to the common table data and axis attributes in the BASE.
-     This will typically be the storageaddress and sometimes the size entries. -->
+<!-- These tables only show up with MS41.2 ID12 and not MS41.3 since they are not needed. -->
   <romid>
    <internalidaddress>E</internalidaddress>
    <internalidstring>12</internalidstring>
@@ -3144,6 +3142,8 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="AlphaN - TPS (DTC 12)" storageaddress="0x4BE" >
 	<table type="Y Axis" storageaddress="0x3D2" />
 </table>
+<table name="MAF Plausibility Check - Low RPM Threshold" storageaddress="0x2DF" />
+<table name="MAF Plausibility Check - High RPM Threshold" storageaddress="0x2D9" />
 </rom>
 
 
@@ -3258,8 +3258,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 </table>
 
  
-<table name="MAF Plausibility Check - Low RPM Threshold" storageaddress="0x2DF" />
-<table name="MAF Plausibility Check - High RPM Threshold" storageaddress="0x2D9" />
+
 
 <table name="Fuel Enrichment - Increasing TPS" storageaddress="0x1626">
 	<table type="Y Axis" storageaddress="0x1414" />
@@ -3794,6 +3793,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 
   
 </rom>  
+
 
 
 <rom base="BMWMS41BASE"> ID12 256KB - ECUID = 1406464
