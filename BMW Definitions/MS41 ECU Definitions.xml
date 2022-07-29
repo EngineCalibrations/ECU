@@ -84,6 +84,7 @@ These definitions are created for FREE without any sort of guarantee. The develo
 	v0.45.7 - Fixed formula for ECT/IAT Ignition Timing Compensation Multiplicative & Injector Pulsewidths (0.004 to 0.0053)
 	v0.45.8 - Added Min/Max TPS Voltage Thresholds for DTC 12 (ID12)
 	v0.45.9 - Added 3 IACV related tables for Cranking and solenoid characterization
+	v0.45.10- Added DTC 214 Vehicle Speed Sensor table
 	
 	v0.46
 	- Initial MS41.3 release
@@ -276,6 +277,20 @@ www.romraider.com/forum/viewforum.php?f=42
 	<state name="Enabled" data="0A" />
 	<state name="Disabled" data="00" />
 </table>
+<table type="2D" name="Upstream O2 Sensor Heater Minimum Voltage" category="Oxygen Sensors" storagetype="uint8" sizey="1" userlevel="1">
+	<scaling units="Volts" expression="x*.0195" to_byte="x/.0195"  format="0.00" fineincrement="0.1" coarseincrement="10" />
+	<table type="Static Y Axis" name="Set to 0V if using Upstream O2 as a sensor input" sizey="1">
+		<data>Minimum Allowable Volts</data>
+	</table>
+	<description>Setting this to 0v may be useful when wanting to use the front O2 input to run a wideband O2.</description>
+</table> 
+<table type="2D" name="Upstream O2 Sensor Heater Maximum Voltage" category="Oxygen Sensors" storagetype="uint8" sizey="1" userlevel="1">
+	<scaling units="Volts" expression="x*.0195" to_byte="x/.0195"  format="0.00" fineincrement="0.1" coarseincrement="10" />
+	<table type="Static Y Axis" name="Set to 5V if using Upstream O2 as a sensor input" sizey="1">
+		<data>Maximum Allowable Volts</data>
+	</table>
+	<description>Setting this to 5v may be useful when wanting to use the front O2 input to run a wideband O2.</description>
+</table>
 <table type="Switch" name="DTC 75,76 - Upstream O2 Sensor Voltage (Bank 1,2)" category="Oxygen Sensors" sizey="1" userlevel="4">
 	<state name="Enabled" data="02" />
 	<state name="Disabled" data="00" />
@@ -286,7 +301,13 @@ www.romraider.com/forum/viewforum.php?f=42
 	<state name="Disabled" data="00" />
 	<description>LBD_HEAT_MAX_VOLTS_0387, LBD_HEAT_MIN_VOLTS_0389</description>
 </table>
-
+<table type="2D" name="DTC 200, 201 - Lambda Regulation (Upstream) - Voltage Difference XXX" category="Oxygen Sensors" storagetype="uint8"  userlevel="1" sizey="1" >
+	<scaling units="Voltage" expression="x*(5/255)" to_byte="x/(5/255)" format="0.00" fineincrement=".01" coarseincrement=".1" />
+	<table type="Static Y Axis" name=" " sizey="1">
+		<data>Oxygen Sensor Voltage Difference</data>
+	</table>
+	<description>TESTING REQUIRED - If a voltage difference during Lambda Regulation is less than this value, ECU might think there is a problem. Reduce this value for O2 sensors that don't change their voltage much due to age.</description>
+</table>
 
 <table type="2D" name="CH - On/Off - VANOS" category="Catalyst Heating" storagetype="uint8" sizey="8" userlevel="1">
 	<scaling units="On/Off" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="1" />
@@ -516,7 +537,7 @@ www.romraider.com/forum/viewforum.php?f=42
 
 
 <table type="2D" name="Rich vs Lean Voltage Hysteresis XXX" category="Closed Loop" storagetype="uint8"  userlevel="1" sizey="1" > C_VLS_MMV_HYS
-	<scaling units="Voltage" expression="x*(5/256)" to_byte="x/(5/256)" format="0.00" fineincrement=".01" coarseincrement=".1" />
+	<scaling units="Voltage" expression="x*(5/255)" to_byte="x/(5/255)" format="0.00" fineincrement=".01" coarseincrement=".1" />
 	<table type="Static Y Axis" name=" " sizey="1">
 		<data>Oxygen Sensor Voltage Hysteresis</data>
 	</table>
@@ -1042,7 +1063,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>Fuel enrichment for a cold engine. Multiply the values in this table to "Fuel Injection - Warmup Enrichment (ECT Compensation)" to calculate Warmup Enrichment.</description>
 </table>
 <table type="3D" name="Fuel Injection - Warmup Enrichment (ECT Compensation)" category="Fuel" storagetype="uint8"  userlevel="1" sizex="3" sizey="8" >
-	<scaling units="Multiplicative Factor" expression="x*.00784" to_byte="x/.00784" format="0.00" fineincrement=".1" coarseincrement="1" />
+	<scaling units="Multiplicative Factor" expression="x*.00784" to_byte="x/.00784" format="0.000" fineincrement=".01" coarseincrement=".05" />
 	<table type="X Axis" name="Coolant Temperature @ Engine Start" storagetype="uint8">
 		<scaling units="&deg;C" expression="x*.75-48" to_byte="(x+48)/.75" format="0" fineincrement="1" coarseincrement="10" />
 	</table>
@@ -1088,6 +1109,18 @@ AlphaN should never be used with a Forced Induction engine.
 		<data>Scaling Factor</data>
 	</table>
 	<description>Fuel Economy Gauge - Scaling Factor</description>
+</table>
+<table type="2D" name="Fuel Pump - Off Delay" category="Fuel" storagetype="uint16" endian="little" userlevel="1" sizey="1">
+	<scaling units="milliseconds" expression="x*10" to_byte="x/10" format="0" fineincrement="1" coarseincrement="10" />
+	<table type="Static Y Axis" name="Time" sizey="1">
+		<data>After Key Off</data>
+	</table>	
+</table>
+<table type="2D" name="Fuel Pump - On Time" category="Fuel" storagetype="uint16" endian="little" userlevel="1" sizey="1">
+	<scaling units="milliseconds" expression="x*10" to_byte="x/10" format="0" fineincrement="1" coarseincrement="10" />
+	<table type="Static Y Axis" name="Time" sizey="1">
+		<data>After Key On</data>
+	</table>	
 </table>
 
 
@@ -2513,15 +2546,7 @@ AlphaN should never be used with a Forced Induction engine.
 
 <!--<table name="MAF (2048 kg/hr Mode) (EDIT)" storageaddress="0x2AD6" />-->
 
-<table type="2D" name="Detection - Open Loop Enrichment" category="Fuel" storagetype="uint8" sizey="16" storageaddress="0x12AE">
-	<!--<scaling units="TPS (%)" expression="x*.47" to_byte="x/.47"  format="0" fineincrement="1" coarseincrement="10" /> -->
-	<scaling units="This table defines the Load [Limit = 1389] threshold beyond which Fuel Injection - Open Loop Enrichment mode is enabled."
-		expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="100" />
-	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" storageaddress="0x8B2">
-		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
-	</table>
-	<description></description>
-</table>
+
 
 
 <table type="Switch" name="Catalyst (SS1)" category="OBD2 Readiness" sizey="1" storageaddress="0x33DB" >
@@ -2631,7 +2656,15 @@ AlphaN should never be used with a Forced Induction engine.
 		<description>Enabled = stock, allows DTC. Other DTC disable switch (x22A) might be enough for AlphaN.</description>
 </table>
 
-
+<table type="2D" name="Detection - Open Loop Enrichment" category="Fuel" storagetype="uint8" sizey="16" storageaddress="0x12AE">
+	<!--<scaling units="TPS (%)" expression="x*.47" to_byte="x/.47"  format="0" fineincrement="1" coarseincrement="10" /> -->
+	<scaling units="This table defines the Load [Limit = 1389] threshold beyond which Fuel Injection - Open Loop Enrichment mode is enabled."
+		expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="100" />
+	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" storageaddress="0x8B2">
+		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description></description>
+</table>
 <table type="2D" name="Fuel Injection - Open Loop Enrichment" category="Fuel" storagetype="uint8" sizey="20" storageaddress="368A">
 <scaling units="Enrichment (%)" expression="x*.392" to_byte="x/.392"  format="0.0" fineincrement="1" coarseincrement="5" />
 	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little"  logparam="P8" storageaddress="3638">
@@ -2781,14 +2814,14 @@ AlphaN should never be used with a Forced Induction engine.
 	<state name="[Disabled]"             data="FF" />
 	<description>Select which Pin will get Switched 5V.</description>
 </table>
-<table type="2D" name="SIR -  Retard %" category="Switched Ignition Retard" storagetype="uint8" sizey="1" storageaddress="0x33FC" > 133FC mem 33FC cal
+<table type="2D" name="SIR - Retard %" category="Switched Ignition Retard" storagetype="uint8" sizey="1" storageaddress="0x33FC" > 133FC mem 33FC cal
 	<scaling units="Retard %" expression="(x-255)*(.391)" to_byte="(x/(.391))+255" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="Static Y Axis" name="Switched Ignition Retard" sizey="1">
 		<data>Multiplier</data>
 	</table>
 	<description>After "Switched Ignition Retard - Switch Input" is selected for either Pin 80, 81, or 82, tune this table as needed. Ignition Timing ("Ignition Timing Base" + 24 degrees) will be multiplied by this value.</description>
 </table> 
-<table type="2D" name="SIR- Throttle Minimum" category="Switched Ignition Retard" storagetype="uint8" sizey="1" storageaddress="0x33ED" >
+<table type="2D" name="SIR - Throttle Minimum" category="Switched Ignition Retard" storagetype="uint8" sizey="1" storageaddress="0x33ED" >
 	<scaling units="TPS%" expression="x*.47" to_byte="x/.47" format="0" fineincrement="1" coarseincrement="10" />
 	<table type="Static Y Axis" name="Switched Ignition Retard" sizey="1">
 		<data>Minimum</data>
@@ -2796,7 +2829,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<description>if TPS > ThisValue then allow Switched Ignition Retard.</description>
 </table>
 
-<table type="Switch" name="WidebandO2 - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33C0">
+<table type="Switch" name="WidebandO2 - Input Select" category="Wideband O2" sizey="2" storageaddress="0x33C0">
 	<state name="[Disabled]"        data="FF FF" />
 	<state name="TPS Volts"    		data="DA E8" />
 	<state name="TPS Volts Bas" 	data="A2 FA" />
@@ -2807,33 +2840,114 @@ AlphaN should never be used with a Forced Induction engine.
 	<state name="Evap. Pressure"    data="A8 F5" />
 	<description>Select sensor input. TPS Voltage option can be used to demonstrate how voltage affects the readout. Use for diagnostic purposes.</description>
 </table>
-<table type="2D" name="WidebandO2 Sensor Scaling" category="0-5V Sensor Inputs" storagetype="uint8" sizey="2" storageaddress="0x33C8">
+<table type="2D" name="WidebandO2 Sensor Scaling" category="Wideband O2" storagetype="uint8" sizey="2" storageaddress="0x47CF">33C8 to 47CF
 	<scaling units="AFR" expression="x*0.05+8.25" to_byte="(x-8.25)/0.05" format="0.00" fineincrement=".05" coarseincrement=".1" />
 	<table type="Y Axis" name="WBO2" storagetype="uint8" storageaddress="0x33C3" >
 		<scaling units="Volts" expression="x*(5/255)" to_byte="x/(5/255)" format="0.00" fineincrement=".02" coarseincrement=".2" />
 	</table>
 </table>
-
-<table type="Switch" name="Ethanol - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33CA">
-	<state name="[Disabled]"        data="FF FF" />
-	<state name="TPS Volts"    		data="DA E8" />
-	<state name="TPS Volts Bas" 	data="A2 FA" />
-	<state name="Rear O2 Bank 1"    data="96 FA" />
-	<state name="Rear O2 Bank 2"    data="94 FA" />
-	<state name="Front O2 Bank 2"   data="98 FA" />
-	<state name="Front O2 Bank 1"   data="9A FA" />	
-	<state name="Evap. Pressure"    data="A8 F5" />
-	<description>Select sensor input. Also enables Ethanol Logic. Only enable if you have correctly wired and installed the Ethanol Content Sensor. Else, the ECU will enrich based on the Ethanol - Fuel Trim table incorrectly.
-
-If you just want to datalog your ECS, set all values in Ethanol - Fuel Trim table to 0.
-
-The Default values are an approximate baseline when used with a properly functioning ECS system.</description>
+<table type="Switch" name="Narrowband Emulation" category="Wideband O2" sizey="1" storageaddress="0x479F" >
+	<state name="[Enabled]"   data="00" />
+	<state name="[Disabled]"  data="FF" />
+	<description>Must connect Wideband O2 0-5V Analog Out to Front O2 Sensor Bank 1 (Pin 4) and select Single Channel O2 Feedback.</description>
 </table>
-<table type="2D" name="Ethanol Sensor Scaling" category="0-5V Sensor Inputs" storagetype="uint8" sizey="2" storageaddress="0x33D2">
-	<scaling units="%" expression="x*(100/255)" to_byte="x/(100/255)" format="0.0" fineincrement=".4" coarseincrement="5" />
-	<table type="Y Axis" name="Ethanol" storagetype="uint8" storageaddress="0x33CE">
-		<scaling units="Volts" expression="x*(5/255)" to_byte="x/(5/255)" format="0.00" fineincrement=".02" coarseincrement=".2" />
+<!--
+<table type="2D" name="Closed Loop Target" category="Wideband O2" storagetype="uint8" sizey="2" storageaddress="0x47CC">
+	<scaling units="Volts" expression="x*.0195" to_byte="x/.0195"  format="0.00" fineincrement="0.1" coarseincrement="10" />
+	<table type="Static Y Axis" name="Lambda Target Voltage" sizey="2">
+		<data>Lean</data>
+		<data>Rich</data>
 	</table>
+	<description>Set this to center around the voltage which represents your Closed Loop Target AFR per your Wideband O2.</description>
+</table>-->
+<table type="3D" name="WBO2 AFR Target" category="Wideband O2" storagetype="uint8" sizey="10" sizex="10" storageaddress="0x11A8">
+	<scaling units="AFR" expression="x*0.05+8.25" to_byte="(x-8.25)/0.05" format="0.00" fineincrement=".05" coarseincrement=".1" />
+	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x35AE" >
+		<scaling units="mg/stroke *Limit = 1389*" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="5" coarseincrement="50" />
+	</table>
+	<table type="Y Axis" name="Engine Speed" storagetype="uint8" logparam="P8" storageaddress="0x35A3" >
+	<scaling units="RPM" expression="x*32" to_byte="x/32" format="0" fineincrement="1" coarseincrement="10" />
+	</table>
+	<description>RPM and Load axis is shared with FlexFuel - Ignition Compensation</description>
+</table>
+<table type="2D" name="STFT - I Factor" category="Wideband O2" storagetype="uint8" sizey="2" storageaddress="0x28B">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="Static Y Axis" name="I Factor - Decrease to soften STFT response" sizey="2">
+		<data>Bank 2</data>
+		<data>Bank 1</data>
+	</table>
+	<description>This table is multiplied to either Pos I or Neg I, depending on if AFR is above or below target.</description>
+</table>
+<table type="2D" name="STFT - P Factor" category="Wideband O2" storagetype="uint8" sizey="1" storageaddress="0x28D">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="Static Y Axis" name="P Factor - Decrease to soften STFT response" sizey="1">
+		<data>Changes STFT once to help AFR switch from Lean to Rich, or Rich to Lean.</data>
+	</table>	
+	<description>This table is multiplied to either Pos P or Neg P once during a directional switch in STFT.</description>
+</table>
+<table type="2D" name="STFT - Pos I (Idle)" category="Wideband O2" storagetype="uint8" sizey="1" storageaddress="0x292" userlevel="3">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="Static Y Axis" name="Pos I (Idle) - Decrease to soften STFT response" sizey="1">
+		<data>Increases STFT gradually while AFR is Leaner than target.</data>
+	</table>	
+</table>
+<table type="2D" name="STFT - Neg I (Idle)" category="Wideband O2" storagetype="uint8" sizey="1" storageaddress="0x28F" userlevel="3">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="Static Y Axis" name="Neg I (Idle) - Decrease to soften STFT response" sizey="1">
+		<data>Decreases STFT gradually while AFR is Richer than target.</data>
+	</table>	
+</table>
+<table type="2D" name="STFT - Pos P (Idle)" category="Wideband O2" storagetype="uint8" sizey="1" storageaddress="0x293" userlevel="3">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="Static Y Axis" name="Pos P (Idle) - Decrease to soften STFT response" sizey="1">
+		<data>Increases STFT once to help AFR switch from Lean to Rich.</data>
+	</table>	
+</table>
+<table type="2D" name="STFT - Neg P (Idle)" category="Wideband O2" storagetype="uint8" sizey="1" storageaddress="0x290" userlevel="3">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="Static Y Axis" name="Neg P (Idle) - Decrease to soften STFT response" sizey="1">
+		<data>Decreases STFT once to help AFR switch from Rich to Lean.</data>	
+	</table>	
+</table>
+<table type="3D" name="STFT - Pos I" category="Wideband O2" storagetype="uint8" sizex="8" sizey="8" storageaddress="0x2180"  userlevel="3">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x2043" >
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
+	</table>
+	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" storageaddress="0x205C" >
+		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description>Increases STFT gradually while AFR is Leaner than target.</description>
+</table>
+<table type="3D" name="STFT - Neg I" category="Wideband O2" storagetype="uint8" sizex="8" sizey="8" storageaddress="0x20F8"  userlevel="3">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x2043" >
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
+	</table>
+	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" storageaddress="0x205C" >
+		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description>Increases STFT gradually while AFR is Leaner than target.</description>
+</table>
+<table type="3D" name="STFT - Pos P" category="Wideband O2" storagetype="uint8" sizex="8" sizey="8" storageaddress="0x21C4"  userlevel="3">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x2043" >
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
+	</table>
+	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" storageaddress="0x205C" >
+		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description>Increases STFT gradually while AFR is Leaner than target.</description>
+</table>
+<table type="3D" name="STFT - Neg P" category="Wideband O2" storagetype="uint8" sizex="8" sizey="8" storageaddress="0x213C"  userlevel="3">
+	<scaling units="?" expression="x" to_byte="x"  format="0" fineincrement="1" coarseincrement="5" />
+	<table type="X Axis" name="Load" storagetype="uint8" logparam="E2" storageaddress="0x2043" >
+		<scaling units="mg/stroke [Limit = 1389]" expression="x*(1389/255)" to_byte="x/(1389/255)" format="0" fineincrement="1" coarseincrement="10" />
+	</table>
+	<table type="Y Axis" name="Engine Speed" storagetype="uint16" endian="little" logparam="P8" storageaddress="0x205C" >
+		<scaling units="RPM" expression="x" to_byte="x" format="#" fineincrement="50" coarseincrement="100" />
+	</table>
+	<description>Increases STFT gradually while AFR is Leaner than target.</description>
 </table>
 
 <table type="Switch" name="MAP - Input Select" category="0-5V Sensor Inputs" sizey="2" storageaddress="0x33EE">
@@ -2908,6 +3022,27 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 	<description>If Fuel Pressure is less than Target, flash CEL.</description>
 </table>
 
+<table type="Switch" name="FlexFuel - Input Select" category="FlexFuel" sizey="2" storageaddress="0x33CA">
+	<state name="[Disabled]"        data="FF FF" />
+	<state name="TPS Volts"    		data="DA E8" />
+	<state name="TPS Volts Bas" 	data="A2 FA" />
+	<state name="Rear O2 Bank 1"    data="96 FA" />
+	<state name="Rear O2 Bank 2"    data="94 FA" />
+	<state name="Front O2 Bank 2"   data="98 FA" />
+	<state name="Front O2 Bank 1"   data="9A FA" />	
+	<state name="Evap. Pressure"    data="A8 F5" />
+	<description>Select sensor input. Also enables FlexFuel Logic. Only enable if you have correctly wired and installed the FlexFuel Content Sensor. Else, the ECU will enrich based on the FlexFuel - Fuel Trim table incorrectly.
+
+If you just want to datalog your ECS, set all values in FlexFuel - Fuel Trim table to 0.
+
+The Default values are an approximate baseline when used with a properly functioning ECS system.</description>
+</table>
+<table type="2D" name="FlexFuel Sensor Scaling" category="FlexFuel" storagetype="uint8" sizey="2" storageaddress="0x33D2">
+	<scaling units="%" expression="x*(100/255)" to_byte="x/(100/255)" format="0.0" fineincrement=".4" coarseincrement="5" />
+	<table type="Y Axis" name="FlexFuel" storagetype="uint8" storageaddress="0x33CE">
+		<scaling units="Volts" expression="x*(5/255)" to_byte="x/(5/255)" format="0.00" fineincrement=".02" coarseincrement=".2" />
+	</table>
+</table>
 <table type="2D" name="FlexFuel - Fuel Trim" category="FlexFuel" storagetype="uint8" sizey="10" storageaddress="0x3579">
 	<scaling units="Additive % :: Adjusts Fuel IPW during all conditions; Normal and Cranking" expression="(x-128)*(200/255)" to_byte="x/(200/255)+128" format="0.0" fineincrement="1" coarseincrement="5" />
 	<table type="Y Axis" name="FlexFuel" storagetype="uint8" storageaddress="0x356F">
@@ -3066,6 +3201,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table type="Switch" name="*** DO NOT FLASH FILE : MS41.3 Version Check" category="*** CUSTOM  MS41.3  FEATURES BELOW ***" sizey="1" userlevel="5" storageaddress="0x33EC"> x173EC bin x133EC mem
 	<state name="2020, December" data="FD" />
 	<state name="2021, January"  data="FC" />
+	<state name="2021, March"  data="FB" />
 	<description>If this table displays a warning upon loading ROM, there is a problem with the file or this definition.
 	</description>
 </table>
@@ -3159,6 +3295,7 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="MAF Plausibility Check - Low RPM Threshold" storageaddress="0x2DF" />
 <table name="MAF Plausibility Check - High RPM Threshold" storageaddress="0x2D9" />
 </rom>
+
 
 
 <rom base="BMWMS41BASE"> *ID12_BASE*  24KB - ECUID = 1406464 AND SHINDE1
@@ -3452,6 +3589,8 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="DTC 214 - Vehicle Speed Sensor" storageaddress="0x2E6" />
 <table name="DTC 25,55 - Upstream O2 Sensor Heater (Bank 1,2)" storageaddress="0x22B" />
 <table name="DTC 25,55 - Upstream O2 Sensor Heater (Bank 1,2) - Alternate" storageaddress="0x253" />
+<table name="Upstream O2 Sensor Heater Minimum Voltage" storageaddress="0x389" />
+<table name="Upstream O2 Sensor Heater Maximum Voltage" storageaddress="0x387" />
 <table name="DTC 75,76 - Upstream O2 Sensor Voltage (Bank 1,2)" storageaddress="0x23A" />
 <table name="DTC 75,76 - Upstream O2 Sensor Voltage (Bank 1,2) - Alternate" storageaddress="0x263" />
 <table name="DTC 79,61 - Downstream O2 Sensor Heater (Bank 1,2)" storageaddress="0x22C" />
@@ -3463,7 +3602,10 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 <table name="DTC 233,234 - Catalytic Converter Overall Efficiency - Downstream O2 Sensor Maximum Voltage" storageaddress="0x386" />
 <table name="DTC 233,234 - Catalytic Converter Overall Efficiency - Downstream O2 Maximum Range" storageaddress="0x68" />
 <table name="Downstream O2 Sensor Minimum Voltage" storageaddress="0x38E" />
-<table name="Downstream O2 Sensor Maximum Voltage" storageaddress="0x38D" /> 
+<table name="Downstream O2 Sensor Maximum Voltage" storageaddress="0x38D" />
+
+<table name="DTC 200, 201 - Lambda Regulation (Upstream) - Voltage Difference XXX" storageaddress="0x37B" />
+ 
 <table name="DTC 8 - Air Flow Meter (HFM)" storageaddress="0x22A" />
 <table name="DTC 12 - TPS or Plausibility" storageaddress="0x21E" />
 <table name="DTC 14 - IAT Sensor" storageaddress="0x232" />
@@ -3536,6 +3678,8 @@ For 11psi/1000RPM rule: Set from 0 to 8000RPM and 0 to 88psi
 </table>
 <table name="Fuel Economy Gauge - Scaling Factor" storageaddress="0x326"/>
 <table name="Fuel Economy Gauge - Scaling Factor 2" storageaddress="0xA7"/>
+<table name="Fuel Pump - Off Delay" storageaddress="0x172"/>
+<table name="Fuel Pump - On Time" storageaddress="0x174"/>
 
 <table name="AlphaN - TPS"  storageaddress="0x48C" >
 	<table type="X Axis" storageaddress="0x3C9" />
