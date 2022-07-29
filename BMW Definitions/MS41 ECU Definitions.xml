@@ -2597,7 +2597,7 @@ AlphaN should never be used with a Forced Induction engine.
 	<state name="[test] - VLS_CAT2"   				data="06 F1" />
 	<state name="[test] - Rear O2 Bank 2 - Volts"   data="94 FA" />
 	<state name="[test] - Rear O2 Bank 1 - Volts"   data="96 FA" />
-	<state name="[test] - FD22"   data="22 FD" />
+	<state name="[test] - FF FF"   					data="FF FF" />
 </table>
 <table type="Switch" name="DO NOT EDIT - MAF / Load Limits" category="*** REFERENCE ONLY - Software Limits ***" sizey="2" userlevel="5" storageaddress="0x3FFE" >
 	<state name="MAF = xxxx ..... Load  = 1389" data="FF FF" />
