@@ -3219,17 +3219,38 @@ The Default values are an approximate baseline when used with a properly functio
 </table>
 
 <table type="2D" name="X Axis - Load"> Base Fuel/Timing Maps
-	<scaling units="mg/stroke [Limit = 5556]" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="0.00" fineincrement=".1" coarseincrement="1" />
+	<scaling units="mg/stroke [Limit = 5556]" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="0.00" fineincrement="20" coarseincrement="100" />
 </table>
 <table type="3D" name="Fuel Injection - Base">
 	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
-		<scaling units="mg/stroke [Limit = 5556]" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="#" fineincrement="1" coarseincrement="10" />
+		<scaling units="mg/stroke [Limit = 5556]" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="#" fineincrement="20" coarseincrement="100" />
+	</table>
+</table>
+<table type="3D" name="Fuel Injection - Base - VANOS Correction">
+	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
+		<scaling units="mg/stroke [Limit = 5556]" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="#" fineincrement="20" coarseincrement="100" />
+	</table>
+</table>
+<table type="3D" name="Ignition Timing - Base">
+	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
+		<scaling units="mg/stroke [Limit = 5556]" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="#" fineincrement="20" coarseincrement="100" />
 	</table>
 </table>
 
+<table type="3D" name="Ignition Timing - Base - VANOS Correction">
+	<table type="X Axis" name="Load" storagetype="uint16" endian="little" logparam="E3" storageaddress="3662">
+		<scaling units="mg/stroke [Limit = 5556]" expression="x*(1389/65535)*4" to_byte="x/(1389/65535)/4" format="#" fineincrement="20" coarseincrement="100" />
+	</table>
+</table>
+
+<table type="3D" name="WBO2 AFR Target">
+	<table type="X Axis" name="Load" storageaddress="0x35AE">
+		<scaling units="mg/stroke [Limit = 5556]" expression="x*(1389/255)*4" to_byte="x/(1389/255)/4" format="0" fineincrement="20" coarseincrement="100" />
+	</table>
+</table>
 
 <table type="3D" name="SD - Load">
-	<scaling units="mg/stroke  [Limit = 5556] (Measured before Port Temperature Compensation)" expression="x*(1389/65535)*4" to_byte="x/(1389/65535*4)" format="0.00" fineincrement=".1" coarseincrement="5" />
+	<scaling units="mg/stroke  [Limit = 5556] (Measured before Port Temperature Compensation)" expression="x*(1389/65535)*4" to_byte="x/(1389/65535*4)" format="#" fineincrement="20" coarseincrement="100" />
 </table>
 <table type="3D" name="SD - Port Temp. (IAT vs ECT)">
 	<table type="X Axis" name="Load (Measured)" storageaddress="0x4763" >
