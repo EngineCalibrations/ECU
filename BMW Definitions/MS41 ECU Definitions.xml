@@ -3293,7 +3293,7 @@ The Default values are an approximate baseline when used with a properly functio
 <rom base="SS1v2">		MS41.3 - SS1u2
   <romid>	
    <internalidaddress>33BB</internalidaddress>
-   <internalidstring>SS1u2</internalidstring>
+   <internalidstring>SS1t2</internalidstring>
    <xmlid>SS1u2</xmlid>
    <ecuid>SHINDE1</ecuid>
    <year>1996-1999</year>
@@ -3343,6 +3343,11 @@ The Default values are an approximate baseline when used with a properly functio
 </table>
 <table name="MAF Plausibility Check - Low RPM Threshold" storageaddress="0x2DF" />
 <table name="MAF Plausibility Check - High RPM Threshold" storageaddress="0x2D9" />
+<table type="Switch" name="*** DO NOT FLASH FILE : MS41.2 Version Check" category="Control Bits" sizey="32" storageaddress="0x5F60" >
+	<state name="Error Check" data="FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF" />
+	<description>If this table displays a warning upon loading ROM, there is a problem with the file or this definition.
+	</description>
+</table>
 </rom>
 
 
